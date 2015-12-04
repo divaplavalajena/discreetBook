@@ -25,9 +25,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
         controller.managedObjectContext = self.managedObjectContext
+        
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        do {
+            let results = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+            if results.count == 0 {
+                    addTestData()
+                }
+        } catch {
+            print("There was a fetch error!")
+        }
+        
         return true
     }
+    
+    func addTestData(){
+        guard let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: managedObjectContext) else {
+            fatalError("Could not find entity description!")
+        }
+        
+        let contact1 = Contact(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
+        contact1.firstName = "Jena"
+        contact1.lastName = "Grafton"
+        let contact2 = Contact(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
+        contact2.firstName = "Cody"
+        contact2.lastName = "Bridges"
 
+        
+        
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

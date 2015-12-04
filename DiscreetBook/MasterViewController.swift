@@ -13,24 +13,51 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
+    
+    var contacts = [Contact]()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        title = "discreetBook Contacts"
+        if let font = UIFont(name: "Baskerville-BoldItalic", size: 20) {
+            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font]
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purpleColor()]
+            UINavigationBar.appearance().tintColor = UIColor.purpleColor()
+            UINavigationBar.appearance().barTintColor = UIColor.grayColor()
+        }
+        
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        self.navigationItem.rightBarButtonItem = addButton
+        //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        //self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        
     }
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        reloadData()
+        tableView.reloadData()
+    }
+    
+    func reloadData() {
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        do {
+            if let results = try managedObjectContext!.executeFetchRequest(fetchRequest) as? [Contact] {
+                contacts = results
+            }
+        } catch {
+            fatalError("There was an error fetching the list of contacts!")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +72,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
              
         // If appropriate, configure the new managed object.
         // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-        newManagedObject.setValue(NSDate(), forKey: "timeStamp")
+        newManagedObject.setValue(NSManagedObject(), forKey: "lastName")
              
         // Save the context.
         do {
@@ -85,6 +112,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        
+        let contact = contacts[indexPath.row]
+        if let lastName = contact.lastName, firstName = contact.firstName {
+            cell.textLabel!.text = "\(firstName) \(lastName)"
+        }
+        
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
@@ -112,7 +145,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
+        if let lastName = object.lastName, firstName = object.firstName {
+            cell.textLabel!.text = "\(firstName) \(lastName)"
+            //cell.textLabel!.text = object.valueForKey("lastName")?.description
+        }
+        
     }
 
     // MARK: - Fetched results controller
@@ -124,20 +161,20 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         let fetchRequest = NSFetchRequest()
         // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Event", inManagedObjectContext: self.managedObjectContext!)
+        let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: self.managedObjectContext!)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timeStamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "lastName")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
