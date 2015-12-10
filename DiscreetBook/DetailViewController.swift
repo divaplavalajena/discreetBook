@@ -11,6 +11,9 @@ import CoreData
 
 class DetailViewController: UIViewController {
     
+    var coreDataStack: CoreDataStack!
+    var editViewController: EditContactViewController?
+    
     @IBOutlet var firstNameLabel: UILabel!
     @IBOutlet var lastNameLabel: UILabel!
 
@@ -97,7 +100,21 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editContact" {
+            let object = detailItem
+                let controller = segue.destinationViewController as! EditContactViewController
+                controller.coreDataStack = coreDataStack
+                controller.editItem = object
+            }
+    
+    }
 
 
 }
+
+
+
+
 

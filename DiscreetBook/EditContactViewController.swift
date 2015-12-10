@@ -1,26 +1,21 @@
 //
-//  AddContactViewController.swift
+//  EditContactViewController.swift
 //  DiscreetBook
 //
-//  Created by Jena Grafton on 11/20/15.
+//  Created by Jena Grafton on 12/9/15.
 //  Copyright © 2015 Bella Voce Productions. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class AddContactViewController: UIViewController, UITextFieldDelegate {
-    
-    //var contentView: UIView!
-    //var scrollView: UIScrollView!
+class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
-    //var managedContext: NSManagedObjectContext!
-    //let managedObjectContext = (UIApplication.sharedApplication().delegate as! CoreDataStack).managedObjectContext
     
     var newContact: Contact?
     
-    @IBOutlet var contactScrollView: UIScrollView!
+    @IBOutlet var editScrollView: UIScrollView!
     
     @IBOutlet var firstName: UITextField!
     @IBOutlet var lastName: UITextField!
@@ -34,13 +29,12 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var state: UITextField!
     @IBOutlet var zip: UITextField!
     
-    @IBAction func cancelButton(sender: AnyObject) {
+    @IBAction func cancelEditButton(sender: AnyObject) {
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func saveButton(sender: AnyObject) {
-        //Code to save new contact from old version - NEED TO UPDATE TO Core Data version
-
+    @IBAction func saveEditButton(sender: AnyObject) {
         
         if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
@@ -58,27 +52,19 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         }
         
         coreDataStack.saveMainContext()
-        
+      
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        contactScrollView.backgroundColor = UIColor.grayColor()
         
-        //scrollView = UIScrollView(frame: view.bounds)
-        //scrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-        //scrollView.backgroundColor = UIColor.grayColor()
-        //scrollView.contentSize = contentView.bounds.size
+        editScrollView.backgroundColor = UIColor.grayColor()
         
-        //scrollView.addSubview(contentView)
-        //view.addSubview(scrollView)
-        
-        contactScrollView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
-        contactScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        editScrollView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
+        editScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
@@ -96,9 +82,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         self.state.delegate = self
         self.zip.delegate = self
 
-        //managedContext = coreDataStack.managedObjectContext
+        self.configureView()
+        
     }
-    
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -106,13 +92,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-//    deinit {
-//        NSNotificationCenter.defaultCenter().removeObserver(self)
-//    }
-    
     func keyboardWillShow(notification: NSNotification) {
         adjustInsetForKeyboardShow(true, notification: notification)
-
+        
     }
     
     func keyboardWillHide(notification: NSNotification) {
@@ -129,17 +111,11 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         
-        contactScrollView.contentInset = contentInsets
-        contactScrollView.scrollIndicatorInsets.bottom = adjustmentHeight
-        contactScrollView.scrollIndicatorInsets.top = adjustmentHeight
+        editScrollView.contentInset = contentInsets
+        editScrollView.scrollIndicatorInsets.bottom = adjustmentHeight
+        editScrollView.scrollIndicatorInsets.top = adjustmentHeight
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
@@ -159,6 +135,62 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         
     }
 
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    var editItem: Contact? {
+        didSet {
+            // Update the view.
+            self.configureView()
+        }
+    }
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let contactItem = self.editItem {
+            
+            if let firstName = self.firstName {
+                firstName.text = contactItem.firstName
+            }
+            if let lastName = self.lastName {
+                lastName.text = contactItem.lastName
+            }
+            if let workPhone = self.workPhone {
+                workPhone.text = contactItem.workPhone
+            }
+            if let homePhone = self.homePhone {
+                homePhone.text = contactItem.homePhone
+            }
+            if let mobilePhone = self.mobilePhone {
+                mobilePhone.text = contactItem.mobilePhone
+            }
+            if let workEmail = self.workEmail {
+                workEmail.text = contactItem.workEmail
+            }
+            if let homeEmail = self.homeEmail {
+                homeEmail.text = contactItem.homeEmail
+            }
+            if let address = self.address {
+                address.text = contactItem.address
+            }
+            if let city = self.city {
+                city.text = contactItem.city
+            }
+            if let state = self.state {
+                state.text = contactItem.state
+            }
+            if let zip = self.zip {
+                zip.text = contactItem.zip
+            }
+            
+        }
+    }
+
+    
+
     /*
     // MARK: - Navigation
 
@@ -170,4 +202,3 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     */
 
 }
-

@@ -11,16 +11,19 @@ import CoreData
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
-    var detailViewController: DetailViewController? = nil
-    var managedObjectContext: NSManagedObjectContext? = nil
+    var detailViewController: DetailViewController?
+    var coreDataStack: CoreDataStack!
     
-    var contacts = [Contact]()
+    var fetchedResultsController: NSFetchedResultsController!
+    //var contacts = [Contact]()
+    
+    
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        title = "discreetBook Contacts"
+        title = "discreetBook"
         if let font = UIFont(name: "Baskerville-BoldItalic", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font]
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purpleColor()]
@@ -37,6 +40,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
+        //fetchedResultsController
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lastName", ascending: true), NSSortDescriptor(key: "firstName", ascending: true)]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
     }
 
@@ -45,19 +54,19 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         super.viewWillAppear(animated)
         
         reloadData()
-        tableView.reloadData()
+        
     }
     
-    func reloadData() {
-        let fetchRequest = NSFetchRequest(entityName: "Contact")
+    func reloadData(predicate: NSPredicate? = nil) {
+        //let fetchRequest = NSFetchRequest(entityName: "Contact")
+        fetchedResultsController.fetchRequest.predicate = predicate
         
         do {
-            if let results = try managedObjectContext!.executeFetchRequest(fetchRequest) as? [Contact] {
-                contacts = results
-            }
+            try fetchedResultsController.performFetch()
         } catch {
             fatalError("There was an error fetching the list of contacts!")
         }
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,25 +74,25 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(sender: AnyObject) {
-        let context = self.fetchedResultsController.managedObjectContext
-        let entity = self.fetchedResultsController.fetchRequest.entity!
-        let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context)
-             
-        // If appropriate, configure the new managed object.
-        // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-        newManagedObject.setValue(NSManagedObject(), forKey: "lastName")
-             
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            //print("Unresolved error \(error), \(error.userInfo)")
-            abort()
-        }
-    }
+//    func insertNewObject(sender: AnyObject) {
+//        let context = self.fetchedResultsController.managedObjectContext
+//        let entity = self.fetchedResultsController.fetchRequest.entity!
+//        let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context)
+//             
+//        // If appropriate, configure the new managed object.
+//        // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+//        newManagedObject.setValue(NSManagedObject(), forKey: "lastName")
+//             
+//        // Save the context.
+//        do {
+//            try context.save()
+//        } catch {
+//            // Replace this implementation with code to handle the error appropriately.
+//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            //print("Unresolved error \(error), \(error.userInfo)")
+//            abort()
+//        }
+//    }
 
     // MARK: - Segues
 
@@ -97,26 +106,33 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
+        if segue.identifier == "addContact" {
+            let controller = segue.destinationViewController as! AddContactViewController
+            controller.coreDataStack = coreDataStack
+            
+        }
+
     }
 
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        return 1 //fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+        
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
-        let contact = contacts[indexPath.row]
-        if let lastName = contact.lastName, firstName = contact.firstName {
-            cell.textLabel!.text = "\(firstName) \(lastName)"
-        }
+        //let contact = fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
+        
+//        if let lastName = contact.lastName, firstName = contact.firstName {
+//            cell.textLabel?.text = "\(firstName) \(lastName)"
+//        }
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
@@ -131,20 +147,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-                
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                //print("Unresolved error \(error), \(error.userInfo)")
-                abort()
-            }
+            
+            coreDataStack.saveMainContext()
+            
+//            do {
+//                try context.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                //print("Unresolved error \(error), \(error.userInfo)")
+//                abort()
+//            }
         }
     }
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
         if let lastName = object.lastName, firstName = object.firstName {
             cell.textLabel!.text = "\(firstName) \(lastName)"
             //cell.textLabel!.text = object.valueForKey("lastName")?.description
@@ -154,42 +172,43 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     // MARK: - Fetched results controller
 
-    var fetchedResultsController: NSFetchedResultsController {
-        if _fetchedResultsController != nil {
-            return _fetchedResultsController!
-        }
-        
-        let fetchRequest = NSFetchRequest()
-        // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: self.managedObjectContext!)
-        fetchRequest.entity = entity
-        
-        // Set the batch size to a suitable number.
-        fetchRequest.fetchBatchSize = 20
-        
-        // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: false)
-        
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        // Edit the section name key path and cache name if appropriate.
-        // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: "lastName", cacheName: "lastName")
-        aFetchedResultsController.delegate = self
-        _fetchedResultsController = aFetchedResultsController
-        
-        do {
-            try _fetchedResultsController!.performFetch()
-        } catch {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-             //print("Unresolved error \(error), \(error.userInfo)")
-             abort()
-        }
-        
-        return _fetchedResultsController!
-    }    
-    var _fetchedResultsController: NSFetchedResultsController? = nil
+//    var fetchedResultsController: NSFetchedResultsController! {
+//        if _fetchedResultsController != nil {
+//            return _fetchedResultsController!
+//        }
+//        
+//        let fetchRequest = NSFetchRequest(entityName: "Contact")
+//        // Edit the entity name as appropriate.
+//        let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext)
+//        fetchRequest.entity = entity
+//        
+//        // Set the batch size to a suitable number.
+//        fetchRequest.fetchBatchSize = 20
+//        
+//        // Edit the sort key as appropriate.
+//            //let sortDescriptor = NSSortDescriptor(key: "lastName", ascending: false)
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lastName", ascending: true), NSSortDescriptor(key: "firstName", ascending: true)]
+//            //fetchRequest.sortDescriptors = [sortDescriptor]
+//        
+//        // Edit the section name key path and cache name if appropriate.
+//        // nil for section name key path means "no sections".
+//        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+//        aFetchedResultsController.delegate = self
+//        _fetchedResultsController = aFetchedResultsController
+//        
+//        do {
+//            try _fetchedResultsController!.performFetch()
+//        } catch {
+//             // Replace this implementation with code to handle the error appropriately.
+//             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+//             //print("Unresolved error \(error), \(error.userInfo)")
+//             abort()
+//        }
+//        
+//        return _fetchedResultsController!
+//    }
+//    
+//    var _fetchedResultsController: NSFetchedResultsController? = nil
 
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()

@@ -19,6 +19,11 @@
 		9C096FCF1BFFA10A00411D88 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */; };
 		9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCE1BFFA10A00411D88 /* Contact.swift */; };
 		9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */; };
+		9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88057D1C19261B00BB0317 /* EditContactViewController.swift */; };
+		9C8805801C1A3BC100BB0317 /* discreetBookIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */; };
+		9C8805821C1A400400BB0317 /* discreetBookIconiPhone5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */; };
+		9C8805841C1A400D00BB0317 /* discreetBookIconSmall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */; };
+		9CB0ED561C127E65006E1327 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0ED551C127E65006E1327 /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +62,11 @@
 		9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C096FCE1BFFA10A00411D88 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		9C88057D1C19261B00BB0317 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
+		9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIcon.jpg; sourceTree = "<group>"; };
+		9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIconiPhone5.jpg; sourceTree = "<group>"; };
+		9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIconSmall.jpg; sourceTree = "<group>"; };
+		9CB0ED551C127E65006E1327 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,10 +120,15 @@
 				9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */,
 				9C096FCE1BFFA10A00411D88 /* Contact.swift */,
 				9C096F9A1BFF965D00411D88 /* AppDelegate.swift */,
+				9CB0ED551C127E65006E1327 /* CoreDataStack.swift */,
 				9C096F9F1BFF965D00411D88 /* MasterViewController.swift */,
 				9C096FA11BFF965D00411D88 /* DetailViewController.swift */,
 				9C096FA31BFF965D00411D88 /* Main.storyboard */,
+				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
 				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
+				9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */,
+				9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */,
+				9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */,
 				9C096FA61BFF965D00411D88 /* Assets.xcassets */,
 				9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */,
 				9C096FAB1BFF965D00411D88 /* Info.plist */,
@@ -249,7 +264,10 @@
 			files = (
 				9C096FAA1BFF965D00411D88 /* LaunchScreen.storyboard in Resources */,
 				9C096FA71BFF965D00411D88 /* Assets.xcassets in Resources */,
+				9C8805841C1A400D00BB0317 /* discreetBookIconSmall.jpg in Resources */,
+				9C8805801C1A3BC100BB0317 /* discreetBookIcon.jpg in Resources */,
 				9C096FA51BFF965D00411D88 /* Main.storyboard in Resources */,
+				9C8805821C1A400400BB0317 /* discreetBookIconiPhone5.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,8 +297,10 @@
 				9C096F9E1BFF965D00411D88 /* DiscreetBook.xcdatamodeld in Sources */,
 				9C096FA01BFF965D00411D88 /* MasterViewController.swift in Sources */,
 				9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */,
+				9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */,
 				9C096FCF1BFFA10A00411D88 /* Contact+CoreDataProperties.swift in Sources */,
 				9C096FA21BFF965D00411D88 /* DetailViewController.swift in Sources */,
+				9CB0ED561C127E65006E1327 /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +527,7 @@
 				9C096FC61BFF965D00411D88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C096FC71BFF965D00411D88 /* Build configuration list for PBXNativeTarget "DiscreetBookTests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +536,7 @@
 				9C096FC91BFF965D00411D88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C096FCA1BFF965D00411D88 /* Build configuration list for PBXNativeTarget "DiscreetBookUITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +545,7 @@
 				9C096FCC1BFF965D00411D88 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
