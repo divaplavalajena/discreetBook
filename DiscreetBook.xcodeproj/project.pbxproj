@@ -20,9 +20,18 @@
 		9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCE1BFFA10A00411D88 /* Contact.swift */; };
 		9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */; };
 		9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88057D1C19261B00BB0317 /* EditContactViewController.swift */; };
-		9C8805801C1A3BC100BB0317 /* discreetBookIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */; };
-		9C8805821C1A400400BB0317 /* discreetBookIconiPhone5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */; };
-		9C8805841C1A400D00BB0317 /* discreetBookIconSmall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */; };
+		9C8805881C1B6D0700BB0317 /* discreetBookIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */; };
+		9C88058A1C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */; };
+		9C88058C1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */; };
+		9C88058E1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88058D1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png */; };
+		9C8805901C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88058F1C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png */; };
+		9C8805921C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805911C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png */; };
+		9C8805941C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805931C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png */; };
+		9C8805961C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */; };
+		9C8805981C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */; };
+		9C88059A1C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */; };
+		9C88059C1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */; };
+		9C88059E1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */; };
 		9CB0ED561C127E65006E1327 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0ED551C127E65006E1327 /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,9 +72,18 @@
 		9C096FCE1BFFA10A00411D88 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		9C88057D1C19261B00BB0317 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
-		9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIcon.jpg; sourceTree = "<group>"; };
-		9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIconiPhone5.jpg; sourceTree = "<group>"; };
-		9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = discreetBookIconSmall.jpg; sourceTree = "<group>"; };
+		9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discreetBookIcon2.png; path = ../discreetBookIcon2.png; sourceTree = "<group>"; };
+		9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-58X58@2X.png"; path = "../discreetBookIcon2-58X58@2X.png"; sourceTree = "<group>"; };
+		9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-80X80@2X.png"; path = "../discreetBookIcon2-80X80@2X.png"; sourceTree = "<group>"; };
+		9C88058D1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-87X87@3X.png"; path = "../discreetBookIcon2-87X87@3X.png"; sourceTree = "<group>"; };
+		9C88058F1C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-120X120@2X.png"; path = "../discreetBookIcon2-120X120@2X.png"; sourceTree = "<group>"; };
+		9C8805911C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-120X120@3X.png"; path = "../discreetBookIcon2-120X120@3X.png"; sourceTree = "<group>"; };
+		9C8805931C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-180X180@3X.png"; path = "../discreetBookIcon2-180X180@3X.png"; sourceTree = "<group>"; };
+		9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-152X152@2X.png"; path = "../discreetBookIcon2-152X152@2X.png"; sourceTree = "<group>"; };
+		9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-76X76@1X.png"; path = "../discreetBookIcon2-76X76@1X.png"; sourceTree = "<group>"; };
+		9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-29X29@1X.png"; path = "../discreetBookIcon2-29X29@1X.png"; sourceTree = "<group>"; };
+		9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-40X40@1X.png"; path = "../discreetBookIcon2-40X40@1X.png"; sourceTree = "<group>"; };
+		9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-600X600Launch5S.png"; path = "../discreetBookIcon2-600X600Launch5S.png"; sourceTree = "<group>"; };
 		9CB0ED551C127E65006E1327 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,11 +144,20 @@
 				9C096FA31BFF965D00411D88 /* Main.storyboard */,
 				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
 				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
-				9C8805811C1A400400BB0317 /* discreetBookIconiPhone5.jpg */,
-				9C88057F1C1A3BC100BB0317 /* discreetBookIcon.jpg */,
-				9C8805831C1A400D00BB0317 /* discreetBookIconSmall.jpg */,
 				9C096FA61BFF965D00411D88 /* Assets.xcassets */,
+				9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */,
+				9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */,
 				9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */,
+				9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */,
+				9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */,
+				9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */,
+				9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */,
+				9C8805931C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png */,
+				9C8805911C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png */,
+				9C88058F1C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png */,
+				9C88058D1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png */,
+				9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */,
+				9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */,
 				9C096FAB1BFF965D00411D88 /* Info.plist */,
 				9C096F9C1BFF965D00411D88 /* DiscreetBook.xcdatamodeld */,
 			);
@@ -263,11 +290,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C096FAA1BFF965D00411D88 /* LaunchScreen.storyboard in Resources */,
+				9C8805881C1B6D0700BB0317 /* discreetBookIcon2.png in Resources */,
+				9C88059E1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png in Resources */,
+				9C88059A1C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png in Resources */,
+				9C88059C1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png in Resources */,
+				9C88058A1C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png in Resources */,
+				9C8805981C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png in Resources */,
+				9C88058C1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png in Resources */,
+				9C88058E1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png in Resources */,
+				9C8805901C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png in Resources */,
+				9C8805921C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png in Resources */,
+				9C8805961C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png in Resources */,
+				9C8805941C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png in Resources */,
 				9C096FA71BFF965D00411D88 /* Assets.xcassets in Resources */,
-				9C8805841C1A400D00BB0317 /* discreetBookIconSmall.jpg in Resources */,
-				9C8805801C1A3BC100BB0317 /* discreetBookIcon.jpg in Resources */,
 				9C096FA51BFF965D00411D88 /* Main.storyboard in Resources */,
-				9C8805821C1A400400BB0317 /* discreetBookIconiPhone5.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

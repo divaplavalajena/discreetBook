@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,23 +18,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="discreetBookIcon.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Mnf-A6-r8M">
-                                <rect key="frame" x="75" y="109" width="451" height="382"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discreetBookIcon2-600X600Launch5S.png" translatesAutoresizingMaskIntoConstraints="NO" id="hMH-Ou-7Al">
+                                <rect key="frame" x="40" y="113" width="520" height="374"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="discreetBook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2S-o6-O04">
-                                <rect key="frame" x="171" y="499" width="215" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="discreetBook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5G-5F-uGl">
+                                <rect key="frame" x="227" y="521" width="146" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="W53-Q6-ISi"/>
+                                    <constraint firstAttribute="height" constant="21" id="pZn-nw-x1K"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-BoldItalic" family="Iowan Old Style" pointSize="22"/>
+                                <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="t2S-o6-O04" secondAttribute="bottom" constant="80" id="4Df-vi-K7Z"/>
-                            <constraint firstItem="t2S-o6-O04" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="-21.5" id="ACY-8N-SzQ"/>
-                            <constraint firstItem="Mnf-A6-r8M" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="PgI-aY-ayv"/>
-                            <constraint firstItem="Mnf-A6-r8M" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="89" id="hnX-2n-uAA"/>
+                            <constraint firstItem="hMH-Ou-7Al" firstAttribute="centerX" secondItem="E5G-5F-uGl" secondAttribute="centerX" id="6xx-hO-hPK"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="E5G-5F-uGl" secondAttribute="bottom" constant="58" id="EVJ-SK-6kc"/>
+                            <constraint firstItem="hMH-Ou-7Al" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="W82-Mg-Xvy"/>
+                            <constraint firstItem="E5G-5F-uGl" firstAttribute="top" secondItem="hMH-Ou-7Al" secondAttribute="bottom" constant="34" id="YAr-Ze-ICU"/>
+                            <constraint firstItem="hMH-Ou-7Al" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="93" id="n5W-bz-S7y"/>
+                            <constraint firstItem="hMH-Ou-7Al" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="tx7-aG-D4e"/>
+                            <constraint firstItem="hMH-Ou-7Al" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="20" id="zJG-qC-FxS"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -43,6 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="discreetBookIcon.jpg" width="1024" height="1024"/>
+        <image name="discreetBookIcon2-600X600Launch5S.png" width="600" height="600"/>
     </resources>
 </document>
