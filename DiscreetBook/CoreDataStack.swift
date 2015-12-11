@@ -1,6 +1,6 @@
 //
 //  CoreDataStack.swift
-//  DiscreetBook
+//  discreetBook
 //
 //  Created by Jena Grafton on 12/4/15.
 //  Copyright © 2015 Bella Voce Productions. All rights reserved.
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 class CoreDataStack: NSObject {
-    static let moduleName = "DiscreetBook"
+    static let moduleName = "discreetBook"
     
     func saveMainContext() {
         if managedObjectContext.hasChanges {

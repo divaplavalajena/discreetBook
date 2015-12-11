@@ -1,6 +1,6 @@
 //
 //  AddContactViewController.swift
-//  DiscreetBook
+//  discreetBook
 //
 //  Created by Jena Grafton on 11/20/15.
 //  Copyright © 2015 Bella Voce Productions. All rights reserved.

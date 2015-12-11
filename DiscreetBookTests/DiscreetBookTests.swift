@@ -1,15 +1,15 @@
 //
-//  DiscreetBookTests.swift
-//  DiscreetBookTests
+//  discreetBookTests.swift
+//  discreetBookTests
 //
 //  Created by Jena Grafton on 11/20/15.
 //  Copyright © 2015 Bella Voce Productions. All rights reserved.
 //
 
 import XCTest
-@testable import DiscreetBook
+@testable import discreetBook
 
-class DiscreetBookTests: XCTestCase {
+class discreetBookTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

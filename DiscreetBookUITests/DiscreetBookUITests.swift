@@ -1,6 +1,6 @@
 //
-//  DiscreetBookUITests.swift
-//  DiscreetBookUITests
+//  discreetBookUITests.swift
+//  discreetBookUITests
 //
 //  Created by Jena Grafton on 11/20/15.
 //  Copyright © 2015 Bella Voce Productions. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class DiscreetBookUITests: XCTestCase {
+class discreetBookUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
