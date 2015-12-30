@@ -71,6 +71,12 @@
       "idiom" : "ipad",
       "filename" : "discreetBookIcon2-152X152@2X.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "discreetBookIcon2-167X167@2X.png",
+      "scale" : "2x"
     }
   ],
   "info" : {

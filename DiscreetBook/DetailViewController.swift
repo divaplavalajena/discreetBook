@@ -8,8 +8,10 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-class DetailViewController: UIViewController {
+
+class DetailViewController: UIViewController, MFMessageComposeViewControllerDelegate {
     
     var coreDataStack: CoreDataStack!
     var editViewController: EditContactViewController?
@@ -19,17 +21,60 @@ class DetailViewController: UIViewController {
 
     @IBOutlet var workPhoneOutlet: UIButton!
     @IBAction func workPhoneButton(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(workPhoneOutlet.titleLabel!.text)")!)
+        let sender = sender
+        showShareOptions(sender)
+        //UIApplication.sharedApplication().openURL(NSURL(string: "tel:2146934121")!)
+        
+//        if let workPhoneText = workPhoneOutlet.titleLabel?.text {
+//            if let url = NSURL(string: "tel:\(workPhoneText)") {
+//                let application = UIApplication.sharedApplication()
+//                if application.canOpenURL(url) {
+//                    application.openURL(url)
+//                }
+//                else{
+//                    print("Phone call failed")
+//                }
+//            }
+//        }
+        
     }
     
     @IBOutlet var homePhoneOutlet: UIButton!
     @IBAction func homePhoneButton(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(homePhoneOutlet.titleLabel!.text)")!)
+        let sender = sender
+        showShareOptions(sender)
+        //UIApplication.sharedApplication().openURL(NSURL(string: "tel:2146934121")!)
+//        if let homePhoneText = homePhoneOutlet.titleLabel?.text {
+//            if let url = NSURL(string: "tel:\(homePhoneText)") {
+//                let application = UIApplication.sharedApplication()
+//                if application.canOpenURL(url) {
+//                    application.openURL(url)
+//                }
+//                else{
+//                    print("Phone call failed")
+//                }
+//            }
+//        }
+
     }
     
     @IBOutlet var mobilePhoneOutlet: UIButton!
     @IBAction func mobilePhoneButton(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(mobilePhoneOutlet.titleLabel!.text)")!)
+        let sender = sender
+        showShareOptions(sender)
+        //UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(mobilePhoneOutlet.titleLabel!.text)")!)
+//        if let mobilePhoneText = mobilePhoneOutlet.titleLabel?.text {
+//            if let url = NSURL(string: "tel:\(mobilePhoneText)") {
+//                let application = UIApplication.sharedApplication()
+//                if application.canOpenURL(url) {
+//                    application.openURL(url)
+//                }
+//                else{
+//                    print("Phone call failed")
+//                }
+//            }
+//        }
+
     }
     
     @IBOutlet var workEmailLabel: UILabel!
@@ -40,8 +85,120 @@ class DetailViewController: UIViewController {
     @IBOutlet var zipLabel: UILabel!
     
     
+    func showShareOptions(sender: AnyObject) {
+        let sender = sender
+        let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let phoneCallAction = UIAlertAction(title: "Phone Call", style: UIAlertActionStyle.Default) { (action) -> Void in
+            switch sender.tag {
+            case 1:
+                if let workPhoneText = self.workPhoneOutlet.titleLabel?.text{
+                    if let url = NSURL(string: "tel:\(workPhoneText)") {
+                        let application = UIApplication.sharedApplication()
+                        if application.canOpenURL(url) {
+                            application.openURL(url)
+                        }
+                        else{
+                            print("Phone call failed")
+                        }
+                    }
+                }
+            case 2:
+                if let homePhoneText = self.homePhoneOutlet.titleLabel?.text {
+                    if let url = NSURL(string: "tel:\(homePhoneText)") {
+                        let application = UIApplication.sharedApplication()
+                        if application.canOpenURL(url) {
+                            application.openURL(url)
+                        }
+                        else{
+                            print("Phone call failed")
+                        }
+                    }
 
+                }
+            case 3:
+                if let mobilePhoneText = self.mobilePhoneOutlet.titleLabel?.text {
+                    if let url = NSURL(string: "tel:\(mobilePhoneText)") {
+                        let application = UIApplication.sharedApplication()
+                        if application.canOpenURL(url) {
+                            application.openURL(url)
+                        }
+                        else{
+                            print("Phone call failed")
+                        }
+                    }
+                }
+            default:
+                break;
+            }
+        }
+        
+        
+        let messageAction = UIAlertAction(title: "Text Message", style: UIAlertActionStyle.Default) { (action) -> Void in
+            var phoneNumber: String
+            switch sender.tag {
+            case 1:
+                if let workPhoneText = self.workPhoneOutlet.titleLabel?.text {
+                    phoneNumber = workPhoneText
+                    self.sendMessage(phoneNumber)
+                }
+            case 2:
+                if let homePhoneText = self.homePhoneOutlet.titleLabel?.text {
+                    phoneNumber = homePhoneText
+                    self.sendMessage(phoneNumber)
+                }
+            case 3:
+                if let mobilePhoneText = self.mobilePhoneOutlet.titleLabel?.text {
+                    phoneNumber = mobilePhoneText
+                    self.sendMessage(phoneNumber)
+                }
+            default:
+                break;
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action) -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        actionSheet.addAction(phoneCallAction)
+        actionSheet.addAction(messageAction)
+        actionSheet.addAction(cancelAction)
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
+    
+        
+    }
+    
+    func sendMessage(phoneNumber: String) {
+        let phoneNumber = phoneNumber
+        let messageVC = MFMessageComposeViewController()
+        
+        messageVC.body = "Enter a message";
+        messageVC.recipients = ["\(phoneNumber)"] //Optionally add some telephone numbers
+        messageVC.messageComposeDelegate = self;
+        
+        self.presentViewController(messageVC, animated: true, completion: nil)
+    }
 
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        /*switch (result.rawValue) {
+        case MessageComposeResultCancelled.rawValue:
+            print("Message was cancelled")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultFailed.rawValue:
+            print("Message failed")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        case MessageComposeResultSent.rawValue:
+            print("Message was sent")
+            self.dismissViewControllerAnimated(true, completion: nil)
+        default:
+            break;
+        }
+        */
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     var detailItem: Contact? {
         didSet {
             // Update the view.

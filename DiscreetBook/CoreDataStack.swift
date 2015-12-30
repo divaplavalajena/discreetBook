@@ -13,6 +13,7 @@ class CoreDataStack: NSObject {
     static let moduleName = "discreetBook"
     
     func saveMainContext() {
+        
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

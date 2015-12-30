@@ -149,6 +149,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
             
             coreDataStack.saveMainContext()
+            tableView.reloadData()
             
 //            do {
 //                try context.save()

@@ -13,7 +13,7 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
     
-    var newContact: Contact?
+    var editContact: Contact?
     
     @IBOutlet var editScrollView: UIScrollView!
     
@@ -35,23 +35,62 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveEditButton(sender: AnyObject) {
+     
+        if let contactItem = self.editContact {
+            
+            if let firstName = self.firstName.text {
+                contactItem.firstName = firstName
+            }
         
-        if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
-            let newContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
-            newContact.firstName = firstName.text
-            newContact.lastName = lastName.text
-            newContact.workPhone = workPhone.text
-            newContact.homePhone = homePhone.text
-            newContact.mobilePhone = mobilePhone.text
-            newContact.workEmail = workEmail.text
-            newContact.homeEmail = homeEmail.text
-            newContact.address = address.text
-            newContact.city = city.text
-            newContact.state = state.text
-            newContact.zip = zip.text
+            if let lastName = self.lastName.text {
+                contactItem.lastName = lastName
+                
+            }
+        
+        
+            if let workPhone = workPhone.text {
+                contactItem.workPhone = workPhone
+            }
+        
+        
+            if let homePhone = homePhone.text {
+                contactItem.homePhone = homePhone
+            }
+        
+        
+            if let mobilePhone = mobilePhone.text {
+                contactItem.mobilePhone = mobilePhone
+            }
+        
+        
+            if let workEmail = workEmail.text {
+                contactItem.workEmail = workEmail
+            }
+        
+        
+            if let homeEmail = homeEmail.text {
+                contactItem.homeEmail = homeEmail
+            }
+        
+        
+            if let address = address.text {
+                contactItem.address = address
+            }
+        
+            if let city = city.text {
+                contactItem.city = city
+            }
+        
+            if let state = state.text {
+                contactItem.state = state
+            }
+        
+            if let zip = zip.text {
+                contactItem.zip = zip
+            }
+
+            coreDataStack.saveMainContext()
         }
-        
-        coreDataStack.saveMainContext()
       
         dismissViewControllerAnimated(true, completion: nil)
     }
