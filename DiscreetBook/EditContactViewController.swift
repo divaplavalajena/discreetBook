@@ -35,69 +35,91 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveEditButton(sender: AnyObject) {
+        
+        //Maybe open or intialize a managed Object context - like save button on add contact page
      
-        if let contactItem = self.editContact {
-            
-            if let firstName = self.firstName.text {
-                contactItem.firstName = firstName
-            }
+        //editItem = self.editContact
         
-            if let lastName = self.lastName.text {
-                contactItem.lastName = lastName
-                
-            }
+        /*
+        if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
+            editContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
         
         
-            if let workPhone = workPhone.text {
-                contactItem.workPhone = workPhone
-            }
-        
-        
-            if let homePhone = homePhone.text {
-                contactItem.homePhone = homePhone
-            }
-        
-        
-            if let mobilePhone = mobilePhone.text {
-                contactItem.mobilePhone = mobilePhone
-            }
-        
-        
-            if let workEmail = workEmail.text {
-                contactItem.workEmail = workEmail
-            }
-        
-        
-            if let homeEmail = homeEmail.text {
-                contactItem.homeEmail = homeEmail
-            }
-        
-        
-            if let address = address.text {
-                contactItem.address = address
-            }
-        
-            if let city = city.text {
-                contactItem.city = city
-            }
-        
-            if let state = state.text {
-                contactItem.state = state
-            }
-        
-            if let zip = zip.text {
-                contactItem.zip = zip
-            }
-
-            coreDataStack.saveMainContext()
+        if let firstName = self.firstName {
+            //editContact?.firstName = firstName.text
+            editContact?.setValue("\(firstName.text)", forKey: "firstName")
         }
-      
+        if let lastName = self.lastName {
+            //editContact?.lastName = lastName.text
+            editContact?.setValue("\(lastName.text)", forKey: "lastName")
+        }
+        if let workPhone = self.workPhone {
+            //editContact?.workPhone = workPhone.text
+            editContact?.setValue("\(workPhone.text)", forKey: "workPhone")
+        }
+        if let homePhone = self.homePhone {
+            //editContact?.homePhone = homePhone.text
+            editContact?.setValue("\(homePhone.text)", forKey: "homePhone")
+        }
+        if let mobilePhone = self.mobilePhone {
+            //editContact?.mobilePhone = mobilePhone.text
+            editContact?.setValue("\(mobilePhone.text)", forKey: "mobilePhone")
+        }
+        if let workEmail = self.workEmail {
+            //editContact?.workEmail = workEmail.text
+            editContact?.setValue("\(workEmail.text)", forKey: "workEmail")
+        }
+        if let homeEmail = self.homeEmail {
+            //editContact?.homeEmail = homeEmail.text
+            editContact?.setValue("\(homeEmail.text)", forKey: "homeEmail")
+        }
+        if let address = self.address {
+            //editContact?.address = address.text
+            editContact?.setValue("\(address.text)", forKey: "address")
+        }
+        if let city = self.city {
+            //editContact?.city = city.text
+            editContact?.setValue("\(city.text)", forKey: "city")
+        }
+        if let state = self.state {
+            //editContact?.state = state.text
+            editContact?.setValue("\(state.text)", forKey: "state")
+        }
+        if let zip = self.zip {
+            //editContact?.zip = zip.text
+            editContact?.setValue("\(zip.text)", forKey: "zip")
+        }
+
+        coreDataStack.saveMainContext()
+        }
+        */
+        
+        if let editContact = editContact, firstName = firstName.text {
+            
+            editContact.firstName = firstName
+            editContact.lastName = lastName.text
+            editContact.workPhone = workPhone.text
+            editContact.homePhone = homePhone.text
+            editContact.mobilePhone = mobilePhone.text
+            editContact.workEmail = workEmail.text
+            editContact.homeEmail = homeEmail.text
+            editContact.address = address.text
+            editContact.city = city.text
+            editContact.state = state.text
+            editContact.zip = zip.text
+            
+           
+        }
+
+        coreDataStack.saveMainContext()
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
         
         
         editScrollView.backgroundColor = UIColor.grayColor()

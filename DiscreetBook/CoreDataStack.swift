@@ -13,12 +13,23 @@ class CoreDataStack: NSObject {
     static let moduleName = "discreetBook"
     
     func saveMainContext() {
+        guard managedObjectContext.hasChanges || saveManagedObjectContext.hasChanges else {
+            return
+        }
         
-        if managedObjectContext.hasChanges {
+        managedObjectContext.performBlockAndWait() {
             do {
-                try managedObjectContext.save()
+                try self.managedObjectContext.save()
             } catch {
                 fatalError("Error saving main managed object context! \(error)")
+            }
+        }
+        
+        saveManagedObjectContext.performBlock() {
+            do {
+                try self.saveManagedObjectContext.save()
+            } catch {
+                fatalError("Error saving private managed object context! \(error)")
             }
         }
     }
@@ -43,7 +54,7 @@ class CoreDataStack: NSObject {
                 configuration: nil,
                 URL: persistentStoreURL,
                 options: [NSMigratePersistentStoresAutomaticallyOption: true,
-                    NSInferMappingModelAutomaticallyOption: true])
+                    NSInferMappingModelAutomaticallyOption: false])
         } catch {
             fatalError("Persistent store error! \(error)")
         }
@@ -51,9 +62,16 @@ class CoreDataStack: NSObject {
         return coordinator
     }()
     
+    private lazy var saveManagedObjectContext: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        moc.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return moc
+    }()
+
+    
     lazy var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        managedObjectContext.parentContext = self.saveManagedObjectContext
         return managedObjectContext
     }()
     
