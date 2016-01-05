@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1509" minimumToolsVersion="Automatic">
     <entity name="Contact" representedClassName=".Contact">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -8,6 +8,7 @@
         </attribute>
         <attribute name="homeEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="homePhone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastInitial" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,6 +18,6 @@
         <userInfo/>
     </entity>
     <elements>
-        <element name="Contact" positionX="261" positionY="189" width="128" height="208"/>
+        <element name="Contact" positionX="261" positionY="189" width="128" height="225"/>
     </elements>
 </model>

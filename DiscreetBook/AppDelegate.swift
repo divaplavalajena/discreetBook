@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let contact1 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
         contact1.firstName = "Jena"
         contact1.lastName = "Grafton"
+        contact1.lastInitial = "G"
         contact1.homePhone = "512-716-3005"
         contact1.workPhone = "512-826-1486"
         contact1.mobilePhone = "512-826-1486"
@@ -73,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let contact2 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
         contact2.firstName = "Cody"
         contact2.lastName = "Bridges"
+        contact2.lastInitial = "B"
         
     }
     

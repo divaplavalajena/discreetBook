@@ -34,6 +34,8 @@ extension Contact {
     
     
     @NSManaged var lastName: String?
+    @NSManaged var lastInitial: String?
+    
     @NSManaged var workPhone: String?
     @NSManaged var homePhone: String?
     @NSManaged var mobilePhone: String?

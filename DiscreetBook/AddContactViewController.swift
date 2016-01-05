@@ -44,17 +44,56 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         
         if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
-            newContact.firstName = firstName.text
-            newContact.lastName = lastName.text
-            newContact.workPhone = workPhone.text
-            newContact.homePhone = homePhone.text
-            newContact.mobilePhone = mobilePhone.text
-            newContact.workEmail = workEmail.text
-            newContact.homeEmail = homeEmail.text
-            newContact.address = address.text
-            newContact.city = city.text
-            newContact.state = state.text
-            newContact.zip = zip.text
+            
+            if let firstName = self.firstName {
+                newContact.firstName = firstName.text
+            }
+            if let lastName = self.lastName {
+                newContact.lastName = lastName.text
+                if var lastInitial = lastName.text {
+                    lastInitial = lastInitial.substringToIndex(lastInitial.startIndex.advancedBy(1))
+                    newContact.lastInitial = lastInitial
+                    print("This is the last name initial saved to the record")
+                    print(lastInitial)
+                }
+                
+            }else {
+                if var firstInitial = firstName.text {
+                    firstInitial = firstInitial.substringToIndex(firstInitial.startIndex.advancedBy(1))
+                    newContact.lastInitial = firstInitial
+                    print("This is the first name initial saved to the record")
+                    print(firstInitial)
+                }
+            }
+
+            
+            if let workPhone = self.workPhone {
+                newContact.workPhone = workPhone.text
+            }
+            if let homePhone = self.homePhone {
+                newContact.homePhone = homePhone.text
+            }
+            if let mobilePhone = self.mobilePhone {
+                newContact.mobilePhone = mobilePhone.text
+            }
+            if let workEmail = self.workEmail {
+                newContact.workEmail = workEmail.text
+            }
+            if let homeEmail = self.homeEmail {
+                newContact.homeEmail = homeEmail.text
+            }
+            if let address = self.address {
+                newContact.address = address.text
+            }
+            if let city = self.city {
+                newContact.city = city.text
+            }
+            if let state = self.state {
+                newContact.state = state.text
+            }
+            if let zip = self.zip {
+                newContact.zip = zip.text
+            }
         }
         
         coreDataStack.saveMainContext()
@@ -170,4 +209,5 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     */
 
 }
+
 
