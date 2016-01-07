@@ -87,7 +87,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         let searchText = self.searchController?.searchBar.text // steve put breakpoint
         print(searchController.searchBar.text)
         if let searchText = searchText {
-            searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@", searchText, searchText)
+            searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@ OR workPhone contains[c] %@ OR homePhone contains[c] %@ OR mobilePhone contains[c] %@", searchText, searchText, searchText, searchText, searchText)
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                 return self.searchPredicate!.evaluateWithObject($0)
                 } as! [Contact]?
@@ -158,6 +158,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     controller.detailItem = object as? Contact
                     controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                     controller.navigationItem.leftItemsSupplementBackButton = true
+                    controller.coreDataStack = coreDataStack
                 }
             }else {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
@@ -166,6 +167,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     controller.detailItem = object
                     controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                     controller.navigationItem.leftItemsSupplementBackButton = true
+                    controller.coreDataStack = coreDataStack
                 }
             }
         }

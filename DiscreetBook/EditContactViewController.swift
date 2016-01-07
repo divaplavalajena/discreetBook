@@ -13,7 +13,7 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
     
-    var editContact: Contact?
+    //var editContact: Contact?
     
     @IBOutlet var editScrollView: UIScrollView!
     
@@ -35,85 +35,60 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveEditButton(sender: AnyObject) {
-        
         //Maybe open or intialize a managed Object context - like save button on add contact page
      
-        //editItem = self.editContact
+        if let editItem = self.editItem {
         
-        /*
-        if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
-            editContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
-        
-        
-        if let firstName = self.firstName {
-            //editContact?.firstName = firstName.text
-            editContact?.setValue("\(firstName.text)", forKey: "firstName")
-        }
-        if let lastName = self.lastName {
-            //editContact?.lastName = lastName.text
-            editContact?.setValue("\(lastName.text)", forKey: "lastName")
-        }
-        if let workPhone = self.workPhone {
-            //editContact?.workPhone = workPhone.text
-            editContact?.setValue("\(workPhone.text)", forKey: "workPhone")
-        }
-        if let homePhone = self.homePhone {
-            //editContact?.homePhone = homePhone.text
-            editContact?.setValue("\(homePhone.text)", forKey: "homePhone")
-        }
-        if let mobilePhone = self.mobilePhone {
-            //editContact?.mobilePhone = mobilePhone.text
-            editContact?.setValue("\(mobilePhone.text)", forKey: "mobilePhone")
-        }
-        if let workEmail = self.workEmail {
-            //editContact?.workEmail = workEmail.text
-            editContact?.setValue("\(workEmail.text)", forKey: "workEmail")
-        }
-        if let homeEmail = self.homeEmail {
-            //editContact?.homeEmail = homeEmail.text
-            editContact?.setValue("\(homeEmail.text)", forKey: "homeEmail")
-        }
-        if let address = self.address {
-            //editContact?.address = address.text
-            editContact?.setValue("\(address.text)", forKey: "address")
-        }
-        if let city = self.city {
-            //editContact?.city = city.text
-            editContact?.setValue("\(city.text)", forKey: "city")
-        }
-        if let state = self.state {
-            //editContact?.state = state.text
-            editContact?.setValue("\(state.text)", forKey: "state")
-        }
-        if let zip = self.zip {
-            //editContact?.zip = zip.text
-            editContact?.setValue("\(zip.text)", forKey: "zip")
-        }
-
-        coreDataStack.saveMainContext()
-        }
-        */
-        
-        if let editContact = editContact, firstName = firstName.text {
-            
-            editContact.firstName = firstName
-            editContact.lastName = lastName.text
-            editContact.workPhone = workPhone.text
-            editContact.homePhone = homePhone.text
-            editContact.mobilePhone = mobilePhone.text
-            editContact.workEmail = workEmail.text
-            editContact.homeEmail = homeEmail.text
-            editContact.address = address.text
-            editContact.city = city.text
-            editContact.state = state.text
-            editContact.zip = zip.text
-            
-           
+            if let firstName = self.firstName {
+                editItem.firstName = firstName.text
+                //editContact?.setValue("\(firstName.text)", forKey: "firstName")
+            }
+            if let lastName = self.lastName {
+                editItem.lastName = lastName.text
+                //editContact?.setValue("\(lastName.text)", forKey: "lastName")
+            }
+            if let workPhone = self.workPhone {
+                editItem.workPhone = workPhone.text
+                //editContact?.setValue("\(workPhone.text)", forKey: "workPhone")
+            }
+            if let homePhone = self.homePhone {
+                editItem.homePhone = homePhone.text
+                //editContact?.setValue("\(homePhone.text)", forKey: "homePhone")
+            }
+            if let mobilePhone = self.mobilePhone {
+                editItem.mobilePhone = mobilePhone.text
+                //editContact?.setValue("\(mobilePhone.text)", forKey: "mobilePhone")
+            }
+            if let workEmail = self.workEmail {
+                editItem.workEmail = workEmail.text
+                //editContact?.setValue("\(workEmail.text)", forKey: "workEmail")
+            }
+            if let homeEmail = self.homeEmail {
+                editItem.homeEmail = homeEmail.text
+                //editContact?.setValue("\(homeEmail.text)", forKey: "homeEmail")
+            }
+            if let address = self.address {
+                editItem.address = address.text
+                //editContact?.setValue("\(address.text)", forKey: "address")
+            }
+            if let city = self.city {
+                editItem.city = city.text
+                //editContact?.setValue("\(city.text)", forKey: "city")
+            }
+            if let state = self.state {
+                editItem.state = state.text
+                //editContact?.setValue("\(state.text)", forKey: "state")
+            }
+            if let zip = self.zip {
+                editItem.zip = zip.text
+                //editContact?.setValue("\(zip.text)", forKey: "zip")
+            }
         }
 
         coreDataStack.saveMainContext()
         
         dismissViewControllerAnimated(true, completion: nil)
+        
     }
 
     override func viewDidLoad() {
@@ -202,12 +177,14 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    var editItem: Contact? {
+    var editItem: Contact?
+        /*
         didSet {
             // Update the view.
             self.configureView()
         }
-    }
+        */
+    
     
     func configureView() {
         // Update the user interface for the detail item.

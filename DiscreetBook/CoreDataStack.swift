@@ -33,7 +33,6 @@ class CoreDataStack: NSObject {
             }
         }
     }
-
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = NSBundle.mainBundle().URLForResource(moduleName, withExtension: "momd")!

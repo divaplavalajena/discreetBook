@@ -22,59 +22,28 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBOutlet var workPhoneOutlet: UIButton!
     @IBAction func workPhoneButton(sender: AnyObject) {
         let sender = sender
-        showShareOptions(sender)
-        //UIApplication.sharedApplication().openURL(NSURL(string: "tel:2146934121")!)
-        
-//        if let workPhoneText = workPhoneOutlet.titleLabel?.text {
-//            if let url = NSURL(string: "tel:\(workPhoneText)") {
-//                let application = UIApplication.sharedApplication()
-//                if application.canOpenURL(url) {
-//                    application.openURL(url)
-//                }
-//                else{
-//                    print("Phone call failed")
-//                }
-//            }
-//        }
-        
+        let workPhoneText = workPhoneOutlet.titleLabel?.text
+        if workPhoneText != nil || workPhoneText == "" {
+            showShareOptions(sender)
+        }
     }
     
     @IBOutlet var homePhoneOutlet: UIButton!
     @IBAction func homePhoneButton(sender: AnyObject) {
         let sender = sender
-        showShareOptions(sender)
-        //UIApplication.sharedApplication().openURL(NSURL(string: "tel:2146934121")!)
-//        if let homePhoneText = homePhoneOutlet.titleLabel?.text {
-//            if let url = NSURL(string: "tel:\(homePhoneText)") {
-//                let application = UIApplication.sharedApplication()
-//                if application.canOpenURL(url) {
-//                    application.openURL(url)
-//                }
-//                else{
-//                    print("Phone call failed")
-//                }
-//            }
-//        }
-
+        let homePhoneText = homePhoneOutlet.titleLabel?.text
+        if homePhoneText != nil || homePhoneText == "" {
+            showShareOptions(sender)
+        }
     }
     
     @IBOutlet var mobilePhoneOutlet: UIButton!
     @IBAction func mobilePhoneButton(sender: AnyObject) {
         let sender = sender
-        showShareOptions(sender)
-        //UIApplication.sharedApplication().openURL(NSURL(string: "tel://\(mobilePhoneOutlet.titleLabel!.text)")!)
-//        if let mobilePhoneText = mobilePhoneOutlet.titleLabel?.text {
-//            if let url = NSURL(string: "tel:\(mobilePhoneText)") {
-//                let application = UIApplication.sharedApplication()
-//                if application.canOpenURL(url) {
-//                    application.openURL(url)
-//                }
-//                else{
-//                    print("Phone call failed")
-//                }
-//            }
-//        }
-
+        let mobilePhoneText = mobilePhoneOutlet.titleLabel?.text
+        if mobilePhoneText != nil || mobilePhoneText == "" {
+            showShareOptions(sender)
+        }
     }
     
     @IBOutlet var workEmailLabel: UILabel!
@@ -84,7 +53,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBOutlet var stateLabel: UILabel!
     @IBOutlet var zipLabel: UILabel!
     
-    
+    //Option of action - phone call or text message based on User's AlertController Selection
     func showShareOptions(sender: AnyObject) {
         let sender = sender
         let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -250,6 +219,10 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.configureView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         self.configureView()
     }
 

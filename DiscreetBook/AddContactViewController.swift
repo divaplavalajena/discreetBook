@@ -39,9 +39,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func saveButton(sender: AnyObject) {
-        //Code to save new contact from old version - NEED TO UPDATE TO Core Data version
 
-        
+        //Code to save new contact
         if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
             
