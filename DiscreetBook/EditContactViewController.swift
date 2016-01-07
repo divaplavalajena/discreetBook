@@ -13,8 +13,6 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
     
-    //var editContact: Contact?
-    
     @IBOutlet var editScrollView: UIScrollView!
     
     @IBOutlet var firstName: UITextField!
@@ -90,13 +88,55 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        //sendButton.enabled = true
+        let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
+        
+        let decimalString : String = components.joinWithSeparator("")
+        let length = decimalString.characters.count
+        let decimalStr = decimalString as NSString
+        let hasLeadingOne = length > 0 && decimalStr.characterAtIndex(0) == (1 as unichar)
+        
+        if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
+        {
+            let newLength = (textField.text! as NSString).length + (string as NSString).length - range.length as Int
+            
+            return (newLength > 10) ? false : true
+        }
+        var index = 0 as Int
+        let formattedString = NSMutableString()
+        
+        if hasLeadingOne
+        {
+            formattedString.appendString("1 ")
+            index += 1
+        }
+        if (length - index) > 3
+        {
+            let areaCode = decimalStr.substringWithRange(NSMakeRange(index, 3))
+            formattedString.appendFormat("(%@)", areaCode)
+            index += 3
+        }
+        if length - index > 3
+        {
+            let prefix = decimalStr.substringWithRange(NSMakeRange(index, 3))
+            formattedString.appendFormat("%@-", prefix)
+            index += 3
+        }
+        
+        let remainder = decimalStr.substringFromIndex(index)
+        formattedString.appendString(remainder)
+        textField.text = formattedString as String
+        return false
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-        
+
         editScrollView.backgroundColor = UIColor.grayColor()
         
         editScrollView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
