@@ -83,7 +83,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // MARK: - UISearchResultsUpdating Delegate Method
     // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = self.searchController?.searchBar.text // steve put breakpoint
+        let searchText = self.searchController?.searchBar.text
         print(searchController.searchBar.text)
         if let searchText = searchText {
             searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@ OR workPhone contains[c] %@ OR homePhone contains[c] %@ OR mobilePhone contains[c] %@", searchText, searchText, searchText, searchText, searchText)
@@ -98,7 +98,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func didDismissSearchController(searchController: UISearchController) {
         searchPredicate = nil
         filteredObjects = nil
-        self.tableView.reloadData()
+        reloadData()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -111,14 +111,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func reloadData(predicate: NSPredicate? = nil) {
         //let fetchRequest = NSFetchRequest(entityName: "Contact")
-        fetchedResultsController.fetchRequest.predicate = predicate
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            fatalError("There was an error fetching the list of contacts!")
+        if searchPredicate == nil {
+            fetchedResultsController.fetchRequest.predicate = predicate
+            
+            do {
+                try fetchedResultsController.performFetch()
+            } catch {
+                fatalError("There was an error fetching the list of contacts!")
+            }
+        } else {
+            filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
+                return self.searchPredicate!.evaluateWithObject($0)
+            } as! [Contact]?
+            //contact = filteredObjects![indexPath.row] as! Contact
         }
-        tableView.reloadData()
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -232,8 +240,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
             coreDataStack.saveMainContext()
             
+            reloadData()
+            
         }
-        reloadData()
+        
 
     }
 
