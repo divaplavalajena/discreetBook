@@ -11,7 +11,7 @@ import CoreData
 import MessageUI
 
 
-class DetailViewController: UIViewController, MFMessageComposeViewControllerDelegate {
+class DetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
     
     var coreDataStack: CoreDataStack!
     var editViewController: EditContactViewController?
@@ -23,7 +23,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBAction func workPhoneButton(sender: AnyObject) {
         let sender = sender
         let workPhoneText = workPhoneOutlet.titleLabel?.text
-        if workPhoneText != nil || workPhoneText == "" {
+        if workPhoneText != nil || workPhoneText != "" {
             showShareOptions(sender)
         }
     }
@@ -32,7 +32,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBAction func homePhoneButton(sender: AnyObject) {
         let sender = sender
         let homePhoneText = homePhoneOutlet.titleLabel?.text
-        if homePhoneText != nil || homePhoneText == "" {
+        if homePhoneText != nil || homePhoneText != "" {
             showShareOptions(sender)
         }
     }
@@ -41,19 +41,40 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBAction func mobilePhoneButton(sender: AnyObject) {
         let sender = sender
         let mobilePhoneText = mobilePhoneOutlet.titleLabel?.text
-        if mobilePhoneText != nil || mobilePhoneText == "" {
+        if mobilePhoneText != nil || mobilePhoneText != "" {
             showShareOptions(sender)
         }
     }
     
-    @IBOutlet var workEmailLabel: UILabel!
-    @IBOutlet var homeEmailLabel: UILabel!
+    @IBOutlet var workEmailOutlet: UIButton!
+    @IBAction func workEmailButton(sender: AnyObject) {
+        let sender = sender
+        let mailComposeViewController = configuredMailComposeViewController(sender)
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+    @IBOutlet var homeEmailOutlet: UIButton!
+    @IBAction func homeEmailButton(sender: AnyObject) {
+        let sender = sender
+        let mailComposeViewController = configuredMailComposeViewController(sender)
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
+    }
+    
+
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var stateLabel: UILabel!
     @IBOutlet var zipLabel: UILabel!
     
-    //Option of action - phone call or text message based on User's AlertController Selection
+    //Option of action on phone Buttons - phone call or text message based on User's AlertController Selection
     func showShareOptions(sender: AnyObject) {
         let sender = sender
         let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -135,10 +156,9 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         actionSheet.addAction(cancelAction)
         
         presentViewController(actionSheet, animated: true, completion: nil)
-    
-        
     }
     
+    //sending text message
     func sendMessage(phoneNumber: String) {
         let phoneNumber = phoneNumber
         let messageVC = MFMessageComposeViewController()
@@ -150,6 +170,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         self.presentViewController(messageVC, animated: true, completion: nil)
     }
 
+    //compose view controller for text message
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         /*switch (result.rawValue) {
         case MessageComposeResultCancelled.rawValue:
@@ -168,6 +189,49 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //methods to compose emails on view
+    func configuredMailComposeViewController(sender: AnyObject) -> MFMailComposeViewController {
+        let sender = sender
+        var emailAddress: String
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        switch sender.tag {
+        case 1:
+            if let workEmailText = self.workEmailOutlet.titleLabel?.text {
+                emailAddress = workEmailText
+                mailComposerVC.setToRecipients(["\(emailAddress)"])
+            }
+        case 2:
+            if let homeEmailText = self.homeEmailOutlet.titleLabel?.text {
+                emailAddress = homeEmailText
+                mailComposerVC.setToRecipients(["\(emailAddress)"])
+            }
+        default:
+            break;
+        }
+
+        mailComposerVC.setSubject("Subject")
+        mailComposerVC.setMessageBody("Email message body:", isHTML: true)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        //(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action) -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        sendMailErrorAlert.addAction(cancelAction)
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //variable and method to compose and configure main view
     var detailItem: Contact? {
         didSet {
             // Update the view.
@@ -194,11 +258,11 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             if let mobilePhoneOutlet = self.mobilePhoneOutlet {
                 mobilePhoneOutlet.setTitle(detail.mobilePhone, forState: UIControlState.Normal)
             }
-            if let workEmailLabel = self.workEmailLabel {
-                workEmailLabel.text = detail.workEmail
+            if let workEmailOutlet = self.workEmailOutlet {
+                workEmailOutlet.setTitle(detail.workEmail, forState: UIControlState.Normal)
             }
-            if let homeEmailLabel = self.homeEmailLabel {
-                homeEmailLabel.text = detail.homeEmail
+            if let homeEmailOutlet = self.homeEmailOutlet {
+                homeEmailOutlet.setTitle(detail.homeEmail, forState: UIControlState.Normal)
             }
             if let addressLabel = self.addressLabel {
                 addressLabel.text = detail.address

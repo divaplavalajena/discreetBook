@@ -63,26 +63,6 @@
                                 <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="workEmail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VgR-8b-rUH">
-                                <rect key="frame" x="64" y="315" width="337" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="337" id="Iy2-rn-sAI"/>
-                                    <constraint firstAttribute="height" constant="21" id="uEy-eq-nF6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="homeEmail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2uP-mn-me8">
-                                <rect key="frame" x="64" y="344" width="331" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="TlL-3h-9bw"/>
-                                    <constraint firstAttribute="width" constant="331" id="duw-Ug-2jK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmF-Zh-sfT">
                                 <rect key="frame" x="38" y="409" width="363" height="21"/>
                                 <constraints>
@@ -252,6 +232,24 @@
                                 <color key="textColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdU-9y-Bg4">
+                                <rect key="frame" x="73" y="344" width="280" height="30"/>
+                                <state key="normal" title="homeEmail">
+                                    <color key="titleColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="homeEmailButton:" destination="JEX-9P-axG" eventType="touchUpInside" id="sNx-gf-AJ4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gG2-82-gOl">
+                                <rect key="frame" x="73" y="306" width="280" height="30"/>
+                                <state key="normal" title="workEmail">
+                                    <color key="titleColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="workEmailButton:" destination="JEX-9P-axG" eventType="touchUpInside" id="yAU-L4-wIe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -263,15 +261,12 @@
                             <constraint firstItem="WfN-oJ-Nth" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="13" id="7Y3-Vw-yOr"/>
                             <constraint firstItem="QmF-Zh-sfT" firstAttribute="top" secondItem="fcf-vj-FO2" secondAttribute="bottom" constant="8" id="8D5-No-xBv"/>
                             <constraint firstItem="OMz-FB-f2m" firstAttribute="top" secondItem="6EE-If-A5w" secondAttribute="bottom" constant="7" id="ABk-al-dGR"/>
-                            <constraint firstItem="VgR-8b-rUH" firstAttribute="top" secondItem="OeC-lw-UZ9" secondAttribute="bottom" constant="33" id="Ce7-cb-0Ya"/>
                             <constraint firstItem="8CD-Ls-AsJ" firstAttribute="leading" secondItem="bBi-FV-j9a" secondAttribute="trailing" constant="8" id="DOY-6e-WgZ"/>
                             <constraint firstItem="7SL-iS-F1C" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="44" id="DXf-ie-l3V"/>
                             <constraint firstItem="7SL-iS-F1C" firstAttribute="top" secondItem="NnL-Rq-vhq" secondAttribute="bottom" constant="16" id="EHN-0P-Ekd"/>
                             <constraint firstItem="RQR-zV-6p6" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="18" id="J8J-cg-cMo"/>
-                            <constraint firstItem="2uP-mn-me8" firstAttribute="leading" secondItem="sdQ-hG-Nia" secondAttribute="trailing" constant="8" id="JEC-yZ-0S2"/>
                             <constraint firstItem="OeC-lw-UZ9" firstAttribute="top" secondItem="8CD-Ls-AsJ" secondAttribute="bottom" constant="2" id="JNa-G6-sBH"/>
                             <constraint firstItem="bBi-FV-j9a" firstAttribute="top" secondItem="WfN-oJ-Nth" secondAttribute="bottom" constant="10" id="Jv7-ku-1iA"/>
-                            <constraint firstItem="VgR-8b-rUH" firstAttribute="leading" secondItem="AjH-R7-PhK" secondAttribute="trailing" constant="8" id="Ow1-LN-hhe"/>
                             <constraint firstItem="PNd-ve-PU9" firstAttribute="top" secondItem="eOE-po-Zsh" secondAttribute="bottom" constant="15" id="PJK-C5-bDc"/>
                             <constraint firstItem="OeC-lw-UZ9" firstAttribute="leading" secondItem="eOE-po-Zsh" secondAttribute="trailing" constant="8" id="QpF-wd-0BX"/>
                             <constraint firstItem="bBi-FV-j9a" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="13" id="SE4-hZ-gmC"/>
@@ -292,7 +287,6 @@
                             <constraint firstItem="G1g-YB-miO" firstAttribute="top" secondItem="nDq-GZ-fQc" secondAttribute="bottom" constant="25" id="pGi-xl-oYL"/>
                             <constraint firstItem="WfN-oJ-Nth" firstAttribute="top" secondItem="gpQ-T8-dso" secondAttribute="bottom" id="q4a-36-Jt9"/>
                             <constraint firstItem="gpQ-T8-dso" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" id="qq9-6W-vl5"/>
-                            <constraint firstItem="2uP-mn-me8" firstAttribute="top" secondItem="VgR-8b-rUH" secondAttribute="bottom" constant="8" id="u8Y-Lc-0VC"/>
                             <constraint firstItem="AjH-R7-PhK" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="13" id="vvW-xG-9Zh"/>
                             <constraint firstItem="6EE-If-A5w" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="18" id="xEO-us-ZKI"/>
                             <constraint firstItem="oCr-tj-x8p" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="33" id="xVD-gk-Npd"/>
@@ -312,12 +306,12 @@
                         <outlet property="addressLabel" destination="QmF-Zh-sfT" id="0GP-UP-2kn"/>
                         <outlet property="cityLabel" destination="RQR-zV-6p6" id="ree-EU-j6t"/>
                         <outlet property="firstNameLabel" destination="7SL-iS-F1C" id="4kr-KP-fZr"/>
-                        <outlet property="homeEmailLabel" destination="2uP-mn-me8" id="TEv-Vh-pXn"/>
+                        <outlet property="homeEmailOutlet" destination="WdU-9y-Bg4" id="kUq-WE-ljS"/>
                         <outlet property="homePhoneOutlet" destination="8CD-Ls-AsJ" id="fwv-JA-haM"/>
                         <outlet property="lastNameLabel" destination="nDq-GZ-fQc" id="mfA-Da-s8r"/>
                         <outlet property="mobilePhoneOutlet" destination="OeC-lw-UZ9" id="eFA-YS-a95"/>
                         <outlet property="stateLabel" destination="6EE-If-A5w" id="puy-zM-Sqz"/>
-                        <outlet property="workEmailLabel" destination="VgR-8b-rUH" id="RQd-6q-YzO"/>
+                        <outlet property="workEmailOutlet" destination="gG2-82-gOl" id="V1y-6k-jeC"/>
                         <outlet property="workPhoneOutlet" destination="G1g-YB-miO" id="cjf-Oz-Ods"/>
                         <outlet property="zipLabel" destination="OMz-FB-f2m" id="uUb-TN-Q0d"/>
                     </connections>

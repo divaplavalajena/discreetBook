@@ -44,7 +44,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        title = "discreetBook"
+        title = "discreet Book"
         if let font = UIFont(name: "Baskerville-BoldItalic", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font]
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purpleColor()]
