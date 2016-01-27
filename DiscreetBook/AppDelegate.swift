@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
             if results.count == 0 {
                 addTestData()
+                /*
+                let secondaryViewController = UIViewController()
+                let secondaryAsNavController = secondaryViewController as! UINavigationController
+                let topAsDetailController = secondaryAsNavController.topViewController as! DetailViewController
+                topAsDetailController.detailItem = results[0]
+                */
+
             }
         } catch {
             print("There was a fetch error!")
@@ -40,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
         }
         
+        
+        
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
@@ -48,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
         controller.coreDataStack.managedObjectContext = coreDataStack.managedObjectContext
+        
+        
         
 
         return true
@@ -149,6 +160,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
         if topAsDetailController.detailItem == nil {
+            
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
         }

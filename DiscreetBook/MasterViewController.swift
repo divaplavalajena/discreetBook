@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+    
+    //private var collapseDetailViewController = true
 
     var detailViewController: DetailViewController?
     var coreDataStack: CoreDataStack!
@@ -56,10 +58,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
         //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         //self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
+        
+        
         
         //fetchedResultsController
         
@@ -254,6 +254,20 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
     }
+    
+    /*
+    // MARK: - UITableViewDelegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        collapseDetailViewController = false
+    }
+    
+    // MARK: - UISplitViewControllerDelegate
+    
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        return collapseDetailViewController
+    }
+    */
 
     // MARK: - Fetched results controller
 

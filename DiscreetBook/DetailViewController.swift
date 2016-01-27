@@ -16,6 +16,9 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     var coreDataStack: CoreDataStack!
     var editViewController: EditContactViewController?
     
+    @IBOutlet var detailScrollView: UIScrollView!
+    
+    
     @IBOutlet var firstNameLabel: UILabel!
     @IBOutlet var lastNameLabel: UILabel!
 
@@ -283,6 +286,14 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        detailScrollView.backgroundColor = UIColor.grayColor()
+        
+        //detailScrollView = UIScrollView(frame: view.bounds)
+        
+        //detailScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //detailScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
         self.configureView()
     }
     

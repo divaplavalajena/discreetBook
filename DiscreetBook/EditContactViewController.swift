@@ -39,47 +39,36 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
         
             if let firstName = self.firstName {
                 editItem.firstName = firstName.text
-                //editContact?.setValue("\(firstName.text)", forKey: "firstName")
             }
             if let lastName = self.lastName {
                 editItem.lastName = lastName.text
-                //editContact?.setValue("\(lastName.text)", forKey: "lastName")
             }
             if let workPhone = self.workPhone {
                 editItem.workPhone = workPhone.text
-                //editContact?.setValue("\(workPhone.text)", forKey: "workPhone")
             }
             if let homePhone = self.homePhone {
                 editItem.homePhone = homePhone.text
-                //editContact?.setValue("\(homePhone.text)", forKey: "homePhone")
             }
             if let mobilePhone = self.mobilePhone {
                 editItem.mobilePhone = mobilePhone.text
-                //editContact?.setValue("\(mobilePhone.text)", forKey: "mobilePhone")
             }
             if let workEmail = self.workEmail {
                 editItem.workEmail = workEmail.text
-                //editContact?.setValue("\(workEmail.text)", forKey: "workEmail")
             }
             if let homeEmail = self.homeEmail {
                 editItem.homeEmail = homeEmail.text
-                //editContact?.setValue("\(homeEmail.text)", forKey: "homeEmail")
             }
             if let address = self.address {
                 editItem.address = address.text
-                //editContact?.setValue("\(address.text)", forKey: "address")
             }
             if let city = self.city {
                 editItem.city = city.text
-                //editContact?.setValue("\(city.text)", forKey: "city")
             }
             if let state = self.state {
                 editItem.state = state.text
-                //editContact?.setValue("\(state.text)", forKey: "state")
             }
             if let zip = self.zip {
                 editItem.zip = zip.text
-                //editContact?.setValue("\(zip.text)", forKey: "zip")
             }
         }
 
@@ -91,45 +80,50 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         //sendButton.enabled = true
-        let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-        let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
         
-        let decimalString : String = components.joinWithSeparator("")
-        let length = decimalString.characters.count
-        let decimalStr = decimalString as NSString
-        let hasLeadingOne = length > 0 && decimalStr.characterAtIndex(0) == (1 as unichar)
-        
-        if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
-        {
-            let newLength = (textField.text! as NSString).length + (string as NSString).length - range.length as Int
+        if textField == workPhone || textField == homePhone || textField == mobilePhone {
+            let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+            let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
             
-            return (newLength > 10) ? false : true
+            let decimalString : String = components.joinWithSeparator("")
+            let length = decimalString.characters.count
+            let decimalStr = decimalString as NSString
+            let hasLeadingOne = length > 0 && decimalStr.characterAtIndex(0) == (1 as unichar)
+            
+            if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
+            {
+                let newLength = (textField.text! as NSString).length + (string as NSString).length - range.length as Int
+                
+                return (newLength > 10) ? false : true
+            }
+            var index = 0 as Int
+            let formattedString = NSMutableString()
+            
+            if hasLeadingOne
+            {
+                formattedString.appendString("1 ")
+                index += 1
+            }
+            if (length - index) > 3
+            {
+                let areaCode = decimalStr.substringWithRange(NSMakeRange(index, 3))
+                formattedString.appendFormat("(%@)", areaCode)
+                index += 3
+            }
+            if length - index > 3
+            {
+                let prefix = decimalStr.substringWithRange(NSMakeRange(index, 3))
+                formattedString.appendFormat("%@-", prefix)
+                index += 3
+            }
+            
+            let remainder = decimalStr.substringFromIndex(index)
+            formattedString.appendString(remainder)
+            textField.text = formattedString as String
+            return false
+        } else {
+            return true
         }
-        var index = 0 as Int
-        let formattedString = NSMutableString()
-        
-        if hasLeadingOne
-        {
-            formattedString.appendString("1 ")
-            index += 1
-        }
-        if (length - index) > 3
-        {
-            let areaCode = decimalStr.substringWithRange(NSMakeRange(index, 3))
-            formattedString.appendFormat("(%@)", areaCode)
-            index += 3
-        }
-        if length - index > 3
-        {
-            let prefix = decimalStr.substringWithRange(NSMakeRange(index, 3))
-            formattedString.appendFormat("%@-", prefix)
-            index += 3
-        }
-        
-        let remainder = decimalStr.substringFromIndex(index)
-        formattedString.appendString(remainder)
-        textField.text = formattedString as String
-        return false
     }
 
 
