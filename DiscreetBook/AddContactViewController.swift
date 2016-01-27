@@ -158,17 +158,17 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         //Brings up keyboard
-        self.firstName.delegate = self
-        self.lastName.delegate = self
-        self.workPhone.delegate = self
-        self.homePhone.delegate = self
-        self.mobilePhone.delegate = self
-        self.workEmail.delegate = self
-        self.homeEmail.delegate = self
-        self.address.delegate = self
-        self.city.delegate = self
-        self.state.delegate = self
-        self.zip.delegate = self
+        firstName.delegate = self
+        lastName.delegate = self
+        workPhone.delegate = self
+        homePhone.delegate = self
+        mobilePhone.delegate = self
+        workEmail.delegate = self
+        homeEmail.delegate = self
+        address.delegate = self
+        city.delegate = self
+        state.delegate = self
+        zip.delegate = self
     }
     
     
@@ -215,6 +215,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
+        textField.resignFirstResponder()
+        
+        /*
         firstName.resignFirstResponder()
         lastName.resignFirstResponder()
         workPhone.resignFirstResponder()
@@ -226,6 +229,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         city.resignFirstResponder()
         state.resignFirstResponder()
         zip.resignFirstResponder()
+        */
         
         return true
         
