@@ -58,6 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let controller = masterNavigationController.topViewController as! MasterViewController
         controller.coreDataStack.managedObjectContext = coreDataStack.managedObjectContext
         
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            splitViewController.preferredDisplayMode = .AllVisible
+        }
+        
         
         
 
