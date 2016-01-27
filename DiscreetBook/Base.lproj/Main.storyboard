@@ -499,6 +499,12 @@
                                             <action selector="homeEmailButton:" destination="JEX-9P-axG" eventType="touchUpInside" id="sNx-gf-AJ4"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="h:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBi-FV-j9a">
+                                        <rect key="frame" x="29" y="168" width="23" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NnL-Rq-vhq">
                                         <rect key="frame" x="253" y="8" width="94" height="21"/>
                                         <constraints>
@@ -517,12 +523,6 @@
                                                 <include reference="SB9-yH-plr"/>
                                             </mask>
                                         </variation>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="h:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBi-FV-j9a">
-                                        <rect key="frame" x="29" y="168" width="23" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
@@ -565,7 +565,9 @@
                                     <constraint firstItem="gG2-82-gOl" firstAttribute="top" secondItem="PNd-ve-PU9" secondAttribute="bottom" constant="9" id="AzL-gR-6Zg">
                                         <variation key="widthClass=compact" constant="-15"/>
                                     </constraint>
-                                    <constraint firstItem="NnL-Rq-vhq" firstAttribute="top" secondItem="kXX-Qc-kV7" secondAttribute="top" constant="21" id="BSh-Id-jQ6"/>
+                                    <constraint firstItem="NnL-Rq-vhq" firstAttribute="top" secondItem="kXX-Qc-kV7" secondAttribute="top" constant="21" id="BSh-Id-jQ6">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="20"/>
+                                    </constraint>
                                     <constraint firstItem="WfN-oJ-Nth" firstAttribute="leading" secondItem="oCr-tj-x8p" secondAttribute="leading" id="CNE-oU-JOr"/>
                                     <constraint firstItem="bBi-FV-j9a" firstAttribute="top" secondItem="WfN-oJ-Nth" secondAttribute="bottom" constant="12" id="CUf-LV-lra"/>
                                     <constraint firstItem="WdU-9y-Bg4" firstAttribute="leading" secondItem="gG2-82-gOl" secondAttribute="leading" id="CVv-Nk-qUO"/>
@@ -580,7 +582,9 @@
                                     <constraint firstItem="oCr-tj-x8p" firstAttribute="leading" secondItem="kXX-Qc-kV7" secondAttribute="leading" constant="52" id="FAQ-Dw-2o2"/>
                                     <constraint firstItem="oCr-tj-x8p" firstAttribute="trailing" secondItem="gpQ-T8-dso" secondAttribute="trailing" id="FrH-ri-wVT"/>
                                     <constraint firstItem="eOE-po-Zsh" firstAttribute="top" secondItem="bBi-FV-j9a" secondAttribute="bottom" constant="13" id="GyW-Kb-ftE"/>
-                                    <constraint firstAttribute="trailing" secondItem="NnL-Rq-vhq" secondAttribute="trailing" constant="353" id="HEO-sb-BXW"/>
+                                    <constraint firstAttribute="trailing" secondItem="NnL-Rq-vhq" secondAttribute="trailing" constant="353" id="HEO-sb-BXW">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="424"/>
+                                    </constraint>
                                     <constraint firstItem="G1g-YB-miO" firstAttribute="baseline" secondItem="WfN-oJ-Nth" secondAttribute="baseline" id="HES-uG-mKv">
                                         <variation key="heightClass=regular-widthClass=regular" constant="-4"/>
                                     </constraint>
@@ -618,7 +622,9 @@
                                         <variation key="widthClass=compact" constant="37"/>
                                     </constraint>
                                     <constraint firstItem="gpQ-T8-dso" firstAttribute="leading" secondItem="oCr-tj-x8p" secondAttribute="leading" id="PXz-rh-mcj"/>
-                                    <constraint firstItem="NnL-Rq-vhq" firstAttribute="leading" secondItem="kXX-Qc-kV7" secondAttribute="leading" constant="353" id="Pi3-89-tZA"/>
+                                    <constraint firstItem="NnL-Rq-vhq" firstAttribute="leading" secondItem="kXX-Qc-kV7" secondAttribute="leading" constant="353" id="Pi3-89-tZA">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="282"/>
+                                    </constraint>
                                     <constraint firstItem="PNd-ve-PU9" firstAttribute="top" secondItem="OeC-lw-UZ9" secondAttribute="bottom" constant="16" id="PxS-1d-NM0">
                                         <variation key="widthClass=compact" constant="25"/>
                                     </constraint>
@@ -792,7 +798,9 @@
                                     <constraint firstItem="oCr-tj-x8p" firstAttribute="top" secondItem="kXX-Qc-kV7" secondAttribute="top" constant="31" id="wIe-3L-sZS"/>
                                     <constraint firstItem="PNd-ve-PU9" firstAttribute="leading" secondItem="oCr-tj-x8p" secondAttribute="leading" id="wt6-MS-OMz"/>
                                     <constraint firstItem="RQR-zV-6p6" firstAttribute="top" secondItem="QmF-Zh-sfT" secondAttribute="bottom" constant="8" id="xG3-k3-uFZ"/>
-                                    <constraint firstItem="7SL-iS-F1C" firstAttribute="top" secondItem="NnL-Rq-vhq" secondAttribute="bottom" constant="48" id="xl2-bv-VD8"/>
+                                    <constraint firstItem="7SL-iS-F1C" firstAttribute="top" secondItem="NnL-Rq-vhq" secondAttribute="bottom" constant="48" id="xl2-bv-VD8">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="49"/>
+                                    </constraint>
                                     <constraint firstItem="QmF-Zh-sfT" firstAttribute="trailing" secondItem="RQR-zV-6p6" secondAttribute="trailing" id="yKr-Ww-77R"/>
                                     <constraint firstItem="fcf-vj-FO2" firstAttribute="leading" secondItem="oCr-tj-x8p" secondAttribute="leading" id="yWw-hV-cVl"/>
                                     <constraint firstItem="gG2-82-gOl" firstAttribute="centerY" secondItem="AjH-R7-PhK" secondAttribute="centerY" id="ycn-8u-Gy1"/>

@@ -289,10 +289,10 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         
         detailScrollView.backgroundColor = UIColor.grayColor()
         
-        //detailScrollView = UIScrollView(frame: view.bounds)
+        self.automaticallyAdjustsScrollViewInsets = false
         
-        //detailScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        //detailScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        detailScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        detailScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         self.configureView()
     }
