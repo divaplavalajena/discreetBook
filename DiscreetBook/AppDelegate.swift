@@ -25,14 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
             if results.count == 0 {
                 addTestData()
-                /*
-                let secondaryViewController = UIViewController()
-                let secondaryAsNavController = secondaryViewController as! UINavigationController
-                let topAsDetailController = secondaryAsNavController.topViewController as! DetailViewController
-                topAsDetailController.detailItem = results[0]
-                */
-
-            }
+                            }
         } catch {
             print("There was a fetch error!")
         }
@@ -60,6 +53,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
             splitViewController.preferredDisplayMode = .AllVisible
+            if let detailVC = navigationController.topViewController as? DetailViewController {
+                if detailVC.detailItem == nil {
+                    do {
+                        let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+                        detailVC.detailItem = results[0]
+                    } catch {
+                        print("There was a fetch error!")
+                    }
+                }
+            }
         }
         
         

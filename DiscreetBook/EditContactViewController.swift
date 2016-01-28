@@ -77,6 +77,7 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         //sendButton.enabled = true
@@ -125,8 +126,8 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
             return true
         }
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
