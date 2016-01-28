@@ -158,7 +158,18 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         actionSheet.addAction(messageAction)
         actionSheet.addAction(cancelAction)
         
-        presentViewController(actionSheet, animated: true, completion: nil)
+        //If iPad treat alert differently
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            if let popoverController = actionSheet.popoverPresentationController {
+                popoverController.sourceView = sender as? UIView
+                popoverController.sourceRect = sender.bounds
+            }
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+        } else {
+            presentViewController(actionSheet, animated: true, completion: nil)
+        }
+        
+        
     }
     
     //sending text message
