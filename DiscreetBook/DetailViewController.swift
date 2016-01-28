@@ -225,8 +225,8 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             break;
         }
 
-        mailComposerVC.setSubject("Subject")
-        mailComposerVC.setMessageBody("Email message body:", isHTML: true)
+        mailComposerVC.setSubject("")
+        mailComposerVC.setMessageBody("", isHTML: true)
         
         return mailComposerVC
     }

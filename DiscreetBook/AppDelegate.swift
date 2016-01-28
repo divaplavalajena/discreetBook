@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         do {
             let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
             if results.count == 0 {
-                addTestData()
+                //addTestData()
             }
         } catch {
             print("There was a fetch error!")
@@ -57,7 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 if detailVC.detailItem == nil {
                     do {
                         let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
-                        detailVC.detailItem = results[0]
+                        if results.count != 0 {
+                            detailVC.detailItem = results[0]
+                        }
                     } catch {
                         print("There was a fetch error!")
                     }
