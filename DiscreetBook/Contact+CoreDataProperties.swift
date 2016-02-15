@@ -15,24 +15,6 @@ import CoreData
 extension Contact {
 
     @NSManaged var firstName: String?
-        /*
-        {
-        set {
-            self.willChangeValueForKey("firstName")
-            self.setPrimitiveValue(newValue, forKey: "firstName")
-            self.didChangeValueForKey("firstName")
-        }
-        
-        get {
-            self.willAccessValueForKey("firstName")
-            let firstName = self.primitiveValueForKey("firstName") as? String
-            self.didAccessValueForKey("firstName")
-            return firstName
-        }
-    }
-*/
-    
-    
     @NSManaged var lastName: String?
     @NSManaged var lastInitial: String?
     
