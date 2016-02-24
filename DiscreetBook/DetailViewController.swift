@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import MessageUI
+import CoreSpotlight
+import MobileCoreServices
 
 
 class DetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
@@ -290,10 +292,113 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             if let zipLabel = self.zipLabel {
                 zipLabel.text = detail.zip
             }
+            
+            var firstName = ""
+            if detail.firstName != nil {
+                firstName = "\(detail.firstName!)"
+            }
+            var lastName = ""
+            if detail.lastName != nil {
+                lastName = "\(detail.lastName!)"
+            }
+            var workPhone = ""
+            if detail.workPhone != nil {
+                workPhone = "\(detail.workPhone!)"
+            }
+            var homePhone = ""
+            if detail.homePhone != nil {
+                homePhone = "\(detail.homePhone!)"
+            }
+            var mobilePhone = ""
+            if detail.mobilePhone != nil {
+                mobilePhone = "\(detail.mobilePhone!)"
+            }
+            var workEmail = ""
+            if detail.workEmail != nil {
+                workEmail = "\(detail.workEmail!)"
+            }
+            var homeEmail = ""
+            if detail.homeEmail != nil {
+                homeEmail = "\(detail.homeEmail!)"
+            }
+            
+            let activity = NSUserActivity(activityType: "com.bellavoceproductions.discreet-Book.name")
+            activity.userInfo = ["firstName": firstName, "lastName": lastName, "workPhone": workPhone, "homePhone": homePhone, "mobilePhone": mobilePhone, "workEmail": workEmail, "homeEmail": homeEmail]
+            
+            if detail.firstName != nil && detail.lastName != nil {
+                activity.title = "\(detail.firstName!) \(detail.lastName!)"
+            } else if detail.firstName != nil {
+                activity.title = "\(detail.firstName!)"
+            } else if detail.lastName != nil {
+                activity.title = "\(detail.lastName!)"
+            }
+            
+            var fullName = ""
+            if detail.firstName != nil && detail.lastName != nil {
+                fullName = "\(detail.firstName!) \(detail.lastName!)"
+            }
+            
+            var keywords = fullName.componentsSeparatedByString(" ")
+            if detail.homePhone != nil {
+                keywords.append(detail.homePhone!)
+            }
+            if detail.workPhone != nil {
+                keywords.append(detail.workPhone!)
+            }
+            if detail.mobilePhone != nil {
+                keywords.append(detail.mobilePhone!)
+            }
+            if detail.homeEmail != nil {
+                keywords.append(detail.homeEmail!)
+            }
+            if detail.workEmail != nil {
+                keywords.append(detail.workEmail!)
+            }
 
+            activity.keywords = Set(keywords)
+            activity.eligibleForHandoff = false
+            activity.eligibleForSearch = true
+            //activity.eligibleForPublicIndexing = true
+            //activity.expirationDate = NSDate()
+            
+            
+            let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeContact as String)
+            // Set the title - first name + last name
+            attributeSet.title = fullName
+            
+            attributeSet.supportsPhoneCall = true
+            // Set the phone numnber to mobilePhone, homePhone, and workPhone
+            attributeSet.phoneNumbers = ["\(detail.mobilePhone)", "\(detail.homePhone)", "\(detail.workPhone)"]
+            
+            
+            //Set the email address to workEmail and homeEmail
+            attributeSet.emailAddresses = ["\(detail.workEmail)", "\(detail.homeEmail)"]
+            
+            attributeSet.relatedUniqueIdentifier = detail.firstName
+            
+            switch Setting.searchIndexingPreference {
+            case .Disabled:
+                activity.eligibleForSearch = false
+            case .ViewedRecords:
+                activity.eligibleForSearch = true
+                activity.contentAttributeSet?.relatedUniqueIdentifier = nil
+            case .AllRecords:
+                activity.eligibleForSearch = true
+            }
+            
+            userActivity = activity
+            activity.becomeCurrent()
+            
         }
     }
 
+    
+    /*
+    override func updateUserActivityState(activity: NSUserActivity) {
+        activity.addUserInfoEntriesFromDictionary(employee.userActivityUserInfo)
+    }
+    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -306,6 +411,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         detailScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         self.configureView()
+        
     }
     
     override func viewDidAppear(animated: Bool) {

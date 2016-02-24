@@ -19,6 +19,10 @@
 		9C096FCF1BFFA10A00411D88 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */; };
 		9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCE1BFFA10A00411D88 /* Contact.swift */; };
 		9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */; };
+		9C6449C81C751F9F00BDFA17 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */; };
+		9C6449CA1C751FAC00BDFA17 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */; };
+		9C6449D31C7E56EB00BDFA17 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6449D21C7E56EB00BDFA17 /* Setting.swift */; };
+		9C6449D51C7E680200BDFA17 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9C6449D41C7E680200BDFA17 /* Settings.bundle */; };
 		9C766EB31C32110600882147 /* discreetBookIcon2-167X167@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C766EB21C32110600882147 /* discreetBookIcon2-167X167@2X.png */; };
 		9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C88057D1C19261B00BB0317 /* EditContactViewController.swift */; };
 		9C8805881C1B6D0700BB0317 /* discreetBookIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */; };
@@ -73,6 +77,10 @@
 		9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C096FCE1BFFA10A00411D88 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		9C6449D21C7E56EB00BDFA17 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		9C6449D41C7E680200BDFA17 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9C766EB21C32110600882147 /* discreetBookIcon2-167X167@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discreetBookIcon2-167X167@2X.png"; sourceTree = "<group>"; };
 		9C88057D1C19261B00BB0317 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discreetBookIcon2.png; path = ../discreetBookIcon2.png; sourceTree = "<group>"; };
@@ -96,6 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6449CA1C751FAC00BDFA17 /* MobileCoreServices.framework in Frameworks */,
+				9C6449C81C751F9F00BDFA17 /* CoreSpotlight.framework in Frameworks */,
 				9CCFF3F51C32794C00B72073 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +130,9 @@
 		9C096F8E1BFF965D00411D88 = {
 			isa = PBXGroup;
 			children = (
+				9C6449D41C7E680200BDFA17 /* Settings.bundle */,
+				9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */,
+				9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */,
 				9CCFF3F41C32794C00B72073 /* MessageUI.framework */,
 				9C096F991BFF965D00411D88 /* discreetBook */,
 				9C096FB31BFF965D00411D88 /* discreetBookTests */,
@@ -150,21 +163,10 @@
 				9C096FA31BFF965D00411D88 /* Main.storyboard */,
 				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
 				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
+				9C6449D21C7E56EB00BDFA17 /* Setting.swift */,
 				9C096FA61BFF965D00411D88 /* Assets.xcassets */,
-				9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */,
-				9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */,
 				9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */,
-				9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */,
-				9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */,
-				9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */,
-				9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */,
-				9C8805931C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png */,
-				9C8805911C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png */,
-				9C88058F1C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png */,
-				9C88058D1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png */,
-				9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */,
-				9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */,
-				9C766EB21C32110600882147 /* discreetBookIcon2-167X167@2X.png */,
+				9C6449CD1C7CCC5400BDFA17 /* Images */,
 				9C096FAB1BFF965D00411D88 /* Info.plist */,
 				9C096F9C1BFF965D00411D88 /* discreetBook.xcdatamodeld */,
 			);
@@ -190,6 +192,26 @@
 			);
 			name = discreetBookUITests;
 			path = DiscreetBookUITests;
+			sourceTree = "<group>";
+		};
+		9C6449CD1C7CCC5400BDFA17 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */,
+				9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */,
+				9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */,
+				9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */,
+				9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */,
+				9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */,
+				9C8805931C1B719000BB0317 /* discreetBookIcon2-180X180@3X.png */,
+				9C8805911C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png */,
+				9C88058F1C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png */,
+				9C88058D1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png */,
+				9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */,
+				9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */,
+				9C766EB21C32110600882147 /* discreetBookIcon2-167X167@2X.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6449D51C7E680200BDFA17 /* Settings.bundle in Resources */,
 				9C096FAA1BFF965D00411D88 /* LaunchScreen.storyboard in Resources */,
 				9C8805881C1B6D0700BB0317 /* discreetBookIcon2.png in Resources */,
 				9C88059E1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png in Resources */,
@@ -339,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C6449D31C7E56EB00BDFA17 /* Setting.swift in Sources */,
 				9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */,
 				9C096F9B1BFF965D00411D88 /* AppDelegate.swift in Sources */,
 				9C096F9E1BFF965D00411D88 /* discreetBook.xcdatamodeld in Sources */,

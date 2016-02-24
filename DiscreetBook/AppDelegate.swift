@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import CoreSpotlight
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -19,12 +20,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        /*
+        switch Setting.searchIndexingPreference {
+        case .Disabled:
+            EmployeeService().destroyEmployeeIndexing()
+        case .AllRecords:
+            EmployeeService().indexAllEmployees()
+        default: break
+        }
+        */
+        
         let fetchRequest = NSFetchRequest(entityName: "Contact")
         
         do {
             let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
             if results.count == 0 {
-                //addTestData()
+                addTestData()
             }
         } catch {
             print("There was a fetch error!")
@@ -175,6 +186,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         return false
     }
+    
+    
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        
+        let firstName: String
+        if userActivity.activityType == "com.bellavoceproductions.discreet-Book.contactsearch",
+            let activityObjectId = userActivity.userInfo?["firstName"] as? String {
+                // Handle result from NSUserActivity indexing
+                firstName = activityObjectId
+        } else if userActivity.activityType == CSSearchableItemActionType,
+            let activityObjectId = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String  {
+                // Handle result from CoreSpotlight indexing
+                firstName = activityObjectId
+        } else {
+            return false
+        }
+        
+        if let splitController = self.window?.rootViewController as? UISplitViewController,
+            navigationController = splitController.viewControllers.first as? MasterViewController,
+            contact = MasterViewController().contactWithFirstName(firstName) {
+                //nav.popToRootViewControllerAnimated(false)
+                //navigationController.topViewController?.restoreUserActivityState(userActivity)
+                
+                let contactViewController = navigationController
+                    .storyboard?
+                    .instantiateViewControllerWithIdentifier("ContactView") as! DetailViewController
+                
+                contactViewController.detailItem = contact
+                splitController.showDetailViewController(contactViewController, sender: self)
+                //(contactViewController, animated: false)
+                return true
+        }
+        
+        return false
+        
+        /*
+        let splitController = self.window?.rootViewController as! UISplitViewController
+        let navigationController = splitController.viewControllers.first as! UINavigationController
+        navigationController.topViewController?.restoreUserActivityState(userActivity)
+        return true
+        */
+    }
+
     
 }
 

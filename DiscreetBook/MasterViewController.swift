@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import CoreSpotlight
+import MobileCoreServices
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
@@ -22,6 +24,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var searchPredicate: NSPredicate?
     
     var filteredObjects : [Contact]? = nil
+    
+    var spotlightSearch : [Contact]?
+    
+    var showToRestore: Contact?
     
     /*
     let collation = UILocalizedIndexedCollation.currentCollation()
@@ -55,11 +61,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
-        //let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        //self.navigationItem.rightBarButtonItem = addButton
-        
-        
         
         //fetchedResultsController
         
@@ -78,20 +79,126 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.tableView.delegate = self
         self.definesPresentationContext = true
         
+        //Setting for indexing to Core Spotlight
+        switch Setting.searchIndexingPreference {
+        case .Disabled:
+            destroyEmployeeIndexing()
+        case .AllRecords:
+            setupSearchableContent()
+        default: break
+        }
+        
+    }
+    
+    // Core Spotlight Search setup
+    func setupSearchableContent() {
+        var searchableItems = [CSSearchableItem]()
+        
+        // fetchedResultsController into an array for core spotlight processing
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("There was an error fetching the list of contacts!")
+        }
+        
+        if fetchedResultsController != nil {
+            spotlightSearch = self.fetchedResultsController.fetchedObjects as! [Contact]?
+        
+            for contact in spotlightSearch! {
+                
+                let searchableItemAttributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeContact as String)
+                
+                
+                var fullName = ""
+                if contact.firstName != nil && contact.lastName != nil {
+                    fullName = "\(contact.firstName!) \(contact.lastName!)"
+                }
+
+                
+                // Set the title - first name + last name
+                if contact.firstName != nil && contact.lastName != nil {
+                    searchableItemAttributeSet.title = (contact.firstName! + " " + contact.lastName!)
+                } else if contact.firstName != nil {
+                    searchableItemAttributeSet.title = contact.firstName!
+                } else if contact.lastName != nil {
+                    searchableItemAttributeSet.title = contact.lastName!
+                }
+                
+                searchableItemAttributeSet.supportsPhoneCall = true
+                // Set the phone numnber to mobilePhone, homePhone, and workPhone
+                searchableItemAttributeSet.phoneNumbers = ["\(contact.mobilePhone)", "\(contact.homePhone)", "\(contact.workPhone)"]
+                
+                
+                //Set the email address to workEmail and homeEmail
+                searchableItemAttributeSet.emailAddresses = ["\(contact.workEmail)", "\(contact.homeEmail)"]
+                
+                var keywords = fullName.componentsSeparatedByString(" ")
+                if contact.homePhone != nil {
+                    keywords.append(contact.homePhone!)
+                }
+                if contact.workPhone != nil {
+                    keywords.append(contact.workPhone!)
+                }
+                if contact.mobilePhone != nil {
+                    keywords.append(contact.mobilePhone!)
+                }
+                if contact.homeEmail != nil {
+                    keywords.append(contact.homeEmail!)
+                }
+                if contact.workEmail != nil {
+                    keywords.append(contact.workEmail!)
+                }
+                searchableItemAttributeSet.keywords = keywords
+
+                
+                let searchableItem = CSSearchableItem(uniqueIdentifier: contact.firstName, domainIdentifier: "com.bellavoceproductions.discreet-Book.contactsearch", attributeSet: searchableItemAttributeSet)
+                
+                searchableItems.append(searchableItem)
+            }
+        }
+        
+        CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(searchableItems) { (error) -> Void in
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+            else {
+                // Items were indexed successfully
+                print("Items were indexed successfully")
+            }
+        }
+    }
+    
+    func destroyEmployeeIndexing() {
+        CSSearchableIndex
+            .defaultSearchableIndex()
+            .deleteAllSearchableItemsWithCompletionHandler { error in
+                if let error = error {
+                    print("Error deleting searching employee items: \(error)")
+                } else {
+                    print("Employees indexing deleted.")
+                }
+        }
+    }
+    
+    func contactWithFirstName(firstName: String) -> Contact? {
+        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
+        let filteredContacts = contacts.filter { $0.firstName == firstName }
+        
+        return filteredContacts.first
     }
     
     // MARK: - UISearchResultsUpdating Delegate Method
     // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         let searchText = self.searchController?.searchBar.text
-        print(searchController.searchBar.text)
+        //print(searchController.searchBar.text)
         if let searchText = searchText {
             searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@ OR workPhone contains[c] %@ OR homePhone contains[c] %@ OR mobilePhone contains[c] %@", searchText, searchText, searchText, searchText, searchText)
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                 return self.searchPredicate!.evaluateWithObject($0)
                 } as! [Contact]?
             self.tableView.reloadData()
-            print(searchPredicate)
+            //print(searchPredicate)
         }
     }
     
@@ -147,6 +254,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                     controller.navigationItem.leftItemsSupplementBackButton = true
                     controller.coreDataStack = coreDataStack
+                } else if let show = showToRestore {
+                    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                    controller.detailItem = show
+                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                    controller.navigationItem.leftItemsSupplementBackButton = true
                 }
             }else {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
@@ -165,6 +277,30 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
         }
 
+    }
+    
+    override func restoreUserActivityState(activity: NSUserActivity) {
+        if let firstName = activity.userInfo?["firstName"] as? String
+            //let lastName = activity.userInfo?["lastName"] as? String
+            /*,
+            let homePhone = activity.userInfo?["homePhone"] as? String,
+            let workPhone = activity.userInfo?["workPhone"] as? String,
+            let mobilePhone = activity.userInfo?["mobilePhone"] as? String,
+            let workEmail = activity.userInfo?["workEmail"] as? String,
+            let homeEmail = activity.userInfo?["homeEmail"] as? String */ {
+                let show = self.fetchedResultsController.valueForKey(firstName) as? Contact
+                //(firstName: firstName, lastName: lastName)
+                /*, homePhone: homePhone, workPhone: workPhone, mobilePhone: mobilePhone, workEmail: workEmail, homeEmail: homeEmail */
+                self.showToRestore = show
+                
+                self.performSegueWithIdentifier("showDetail", sender: self)
+        }
+        else {
+            let alert = UIAlertController(title: "Error", message: "Error retrieving information from userInfo:\n\(activity.userInfo)", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 
     // MARK: - Table View
@@ -229,11 +365,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             var contact: Contact
             if searchPredicate == nil {
                 contact = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
+                deindexItem(indexPath.row)
             } else {
                 let filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                     return self.searchPredicate!.evaluateWithObject($0)
                 }
                 contact = filteredObjects![indexPath.row] as! Contact
+                deindexItem(indexPath.row)
             }
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(contact)
@@ -246,6 +384,18 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
 
     }
+    
+    func deindexItem(which: Int) {
+        CSSearchableIndex.defaultSearchableIndex().deleteSearchableItemsWithIdentifiers(["\(which)"]) { (error: NSError?) -> Void in
+            if let error = error {
+                print("Deindexing error: \(error.localizedDescription)")
+            } else {
+                print("Search item successfully removed!")
+            }
+        }
+    }
+    
+    
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
@@ -375,6 +525,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
          self.tableView.reloadData()
      }
      */
+    
 
 }
 
