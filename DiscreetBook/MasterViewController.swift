@@ -149,12 +149,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     keywords.append(contact.workEmail!)
                 }
                 searchableItemAttributeSet.keywords = keywords
+                
+                searchableItemAttributeSet.relatedUniqueIdentifier = contact.firstName
 
                 
                 let searchableItem = CSSearchableItem(uniqueIdentifier: contact.firstName, domainIdentifier: "com.bellavoceproductions.discreet-Book.contactsearch", attributeSet: searchableItemAttributeSet)
                 
                 searchableItems.append(searchableItem)
             }
+            //print(searchableItems)
         }
         
         CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(searchableItems) { (error) -> Void in
@@ -180,12 +183,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
-    func contactWithFirstName(firstName: String) -> Contact? {
-        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
-        let filteredContacts = contacts.filter { $0.firstName == firstName }
-        
-        return filteredContacts.first
-    }
+    
     
     // MARK: - UISearchResultsUpdating Delegate Method
     // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
@@ -280,20 +278,21 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     override func restoreUserActivityState(activity: NSUserActivity) {
-        if let firstName = activity.userInfo?["firstName"] as? String
-            //let lastName = activity.userInfo?["lastName"] as? String
-            /*,
-            let homePhone = activity.userInfo?["homePhone"] as? String,
-            let workPhone = activity.userInfo?["workPhone"] as? String,
-            let mobilePhone = activity.userInfo?["mobilePhone"] as? String,
-            let workEmail = activity.userInfo?["workEmail"] as? String,
-            let homeEmail = activity.userInfo?["homeEmail"] as? String */ {
+        
+        if let firstName = activity.userInfo?["firstName"] as? String {
                 let show = self.fetchedResultsController.valueForKey(firstName) as? Contact
                 //(firstName: firstName, lastName: lastName)
                 /*, homePhone: homePhone, workPhone: workPhone, mobilePhone: mobilePhone, workEmail: workEmail, homeEmail: homeEmail */
                 self.showToRestore = show
                 
                 self.performSegueWithIdentifier("showDetail", sender: self)
+        } else if activity.activityType == CSSearchableItemActionType {
+            if let userInfo = activity.userInfo {
+                let selectedContact = userInfo[CSSearchableItemActivityIdentifier] as! String
+                let show = contactWithFirstName(selectedContact)
+                self.showToRestore = show
+                performSegueWithIdentifier("showDetail", sender: self)
+            }
         }
         else {
             let alert = UIAlertController(title: "Error", message: "Error retrieving information from userInfo:\n\(activity.userInfo)", preferredStyle: .Alert)
@@ -301,6 +300,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    func contactWithFirstName(firstName: String) -> Contact? {
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
+        let filteredContacts = contacts.filter { $0.firstName == firstName }
+        
+        return filteredContacts.first
     }
 
     // MARK: - Table View

@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
+    var fetchedResultsController: NSFetchedResultsController!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -190,6 +191,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
         
+        let splitController = window?.rootViewController as? UISplitViewController
+        let navigationController = splitController?.viewControllers.first as? MasterViewController
+        navigationController?.restoreUserActivityState(userActivity)
+        
+        return true
+        
+        /*
         let firstName: String
         if userActivity.activityType == "com.bellavoceproductions.discreet-Book.contactsearch",
             let activityObjectId = userActivity.userInfo?["firstName"] as? String {
@@ -203,11 +211,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return false
         }
         
-        if let splitController = self.window?.rootViewController as? UISplitViewController,
+        //TODO: try pushViewController() method in the future
+        if let splitController = window?.rootViewController as? UISplitViewController,
             navigationController = splitController.viewControllers.first as? MasterViewController,
-            contact = MasterViewController().contactWithFirstName(firstName) {
-                //nav.popToRootViewControllerAnimated(false)
+            contact = contactWithFirstName(firstName) {
+                navigationController.restoreUserActivityState(userActivity)
+                //popToRootViewControllerAnimated(false)
                 //navigationController.topViewController?.restoreUserActivityState(userActivity)
+                
                 
                 let contactViewController = navigationController
                     .storyboard?
@@ -216,10 +227,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                 contactViewController.detailItem = contact
                 splitController.showDetailViewController(contactViewController, sender: self)
                 //(contactViewController, animated: false)
+                
                 return true
         }
         
         return false
+        */
         
         /*
         let splitController = self.window?.rootViewController as! UISplitViewController
@@ -227,6 +240,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController?.restoreUserActivityState(userActivity)
         return true
         */
+    }
+    
+    func contactWithFirstName(firstName: String) -> Contact? {
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
+        let filteredContacts = contacts.filter { $0.firstName == firstName }
+        
+        return filteredContacts.first
     }
 
     
