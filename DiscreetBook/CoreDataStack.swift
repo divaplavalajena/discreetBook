@@ -17,7 +17,7 @@ class CoreDataStack: NSObject {
             return
         }
         
-        managedObjectContext.performBlockAndWait() {
+        managedObjectContext.performAndWait() {
             do {
                 try self.managedObjectContext.save()
             } catch {
@@ -25,7 +25,7 @@ class CoreDataStack: NSObject {
             }
         }
         
-        saveManagedObjectContext.performBlock() {
+        saveManagedObjectContext.perform() {
             do {
                 try self.saveManagedObjectContext.save()
             } catch {
@@ -36,24 +36,24 @@ class CoreDataStack: NSObject {
     
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = NSBundle.mainBundle().URLForResource(moduleName, withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        let modelURL = Bundle.main.url(forResource: moduleName, withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
-    lazy var applicationDocumentsDirectory: NSURL = {
-        return NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last!
+    lazy var applicationDocumentsDirectory: URL = {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
     }()
     
     
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        let persistentStoreURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent("\(moduleName).sqlite")
+        let persistentStoreURL = self.applicationDocumentsDirectory.appendingPathComponent("\(moduleName).sqlite")
         
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType,
-                configuration: nil,
-                URL: persistentStoreURL,
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: persistentStoreURL,
                 options: [NSMigratePersistentStoresAutomaticallyOption: true,
                     NSInferMappingModelAutomaticallyOption: false])
         } catch {
@@ -64,8 +64,8 @@ class CoreDataStack: NSObject {
     }()
     
     
-    private lazy var saveManagedObjectContext: NSManagedObjectContext = {
-        let moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+    fileprivate lazy var saveManagedObjectContext: NSManagedObjectContext = {
+        let moc = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         moc.persistentStoreCoordinator = self.persistentStoreCoordinator
         return moc
     }()
@@ -73,8 +73,8 @@ class CoreDataStack: NSObject {
     
     
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.parentContext = self.saveManagedObjectContext
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.parent = self.saveManagedObjectContext
         return managedObjectContext
     }()
     

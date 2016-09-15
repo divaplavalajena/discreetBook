@@ -15,10 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         /*
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let fetchRequest = NSFetchRequest(entityName: "Contact")
         
         do {
-            let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as! [Contact]
             if results.count == 0 {
                 addTestData()
             }
@@ -44,9 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
         if let tab = window?.rootViewController as? UISplitViewController {
             for child in tab.viewControllers ?? [] {
-                if let child = child as? UINavigationController, top = child.topViewController {
-                    if top.respondsToSelector("setCoreDataStack:") {
-                        top.performSelector("setCoreDataStack:", withObject: coreDataStack)
+                if let child = child as? UINavigationController, let top = child.topViewController {
+                    if top.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
+                        top.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
                     }
                 }
             }
@@ -56,19 +56,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
 
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
         controller.coreDataStack.managedObjectContext = coreDataStack.managedObjectContext
         
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            splitViewController.preferredDisplayMode = .AllVisible
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            splitViewController.preferredDisplayMode = .allVisible
             if let detailVC = navigationController.topViewController as? DetailViewController {
                 if detailVC.detailItem == nil {
                     do {
-                        let results = try coreDataStack.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+                        let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as! [Contact]
                         if results.count != 0 {
                             detailVC.detailItem = results[0]
                         }
@@ -86,19 +86,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func addTestData(){
-        guard let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) else {
+        guard let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) else {
             fatalError("Could not find entity description!")
         }
         
-        let contact1 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact1 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact1.firstName = "Leia"
         contact1.lastName = "Organa-Solo"
         contact1.lastInitial = "O"
-        let contact2 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact2 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact2.firstName = "Han"
         contact2.lastName = "Solo"
         contact2.lastInitial = "S"
-        let contact3 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact3 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact3.firstName = "Luke"
         contact3.lastName = "Skywalker"
         contact3.lastInitial = "S"
@@ -111,64 +111,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         contact3.city = "Mos Eisley Outskirts"
         contact3.state = "Tatooine"
         contact3.zip = "89179"
-        let contact4 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact4 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact4.firstName = "Obi-Wan"
         contact4.lastName = "Kenobi"
         contact4.lastInitial = "K"
-        let contact5 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact5 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact5.firstName = "Mace"
         contact5.lastName = "Windu"
         contact5.lastInitial = "W"
-        let contact6 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact6 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact6.firstName = "Darth"
         contact6.lastName = "Vader"
         contact6.lastInitial = "V"
-        let contact7 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact7 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact7.firstName = "Anakin"
         contact7.lastName = "Skywalker"
         contact7.lastInitial = "S"
-        let contact8 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact8 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact8.firstName = "Poe"
         contact8.lastName = "Dameron"
         contact8.lastInitial = "D"
-        let contact9 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact9 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact9.firstName = "Lando"
         contact9.lastName = "Calrissian"
         contact9.lastInitial = "C"
-        let contact10 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact10 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact10.firstName = "Boba"
         contact10.lastName = "Fett"
         contact10.lastInitial = "F"
-        let contact11 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact11 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact11.firstName = "Mara"
         contact11.lastName = "Jade"
         contact11.lastInitial = "J"
-        let contact12 = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        let contact12 = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
         contact12.firstName = "Jabba the"
         contact12.lastName = "Hutt"
         contact12.lastInitial = "H"
         
     }
     
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         coreDataStack.saveMainContext()
@@ -177,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     // MARK: - Split view
 
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
         guard let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController else { return false }
         if topAsDetailController.detailItem == nil {
@@ -189,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     
-    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
         let splitController = window?.rootViewController as? UISplitViewController
         let navigationController = splitController?.viewControllers.first as? MasterViewController
@@ -242,7 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         */
     }
     
-    func contactWithFirstName(firstName: String) -> Contact? {
+    func contactWithFirstName(_ firstName: String) -> Contact? {
         let fetchRequest = NSFetchRequest(entityName: "Contact")
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)

@@ -25,7 +25,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBOutlet var lastNameLabel: UILabel!
 
     @IBOutlet var workPhoneOutlet: UIButton!
-    @IBAction func workPhoneButton(sender: AnyObject) {
+    @IBAction func workPhoneButton(_ sender: AnyObject) {
         let sender = sender
         let workPhoneText = workPhoneOutlet.titleLabel?.text
         if workPhoneText != nil || workPhoneText != "" {
@@ -34,7 +34,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     }
     
     @IBOutlet var homePhoneOutlet: UIButton!
-    @IBAction func homePhoneButton(sender: AnyObject) {
+    @IBAction func homePhoneButton(_ sender: AnyObject) {
         let sender = sender
         let homePhoneText = homePhoneOutlet.titleLabel?.text
         if homePhoneText != nil || homePhoneText != "" {
@@ -43,7 +43,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     }
     
     @IBOutlet var mobilePhoneOutlet: UIButton!
-    @IBAction func mobilePhoneButton(sender: AnyObject) {
+    @IBAction func mobilePhoneButton(_ sender: AnyObject) {
         let sender = sender
         let mobilePhoneText = mobilePhoneOutlet.titleLabel?.text
         if mobilePhoneText != nil || mobilePhoneText != "" {
@@ -52,22 +52,22 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     }
     
     @IBOutlet var workEmailOutlet: UIButton!
-    @IBAction func workEmailButton(sender: AnyObject) {
+    @IBAction func workEmailButton(_ sender: AnyObject) {
         let sender = sender
         let mailComposeViewController = configuredMailComposeViewController(sender)
         if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            self.present(mailComposeViewController, animated: true, completion: nil)
         } else {
             self.showSendMailErrorAlert()
         }
     }
     
     @IBOutlet var homeEmailOutlet: UIButton!
-    @IBAction func homeEmailButton(sender: AnyObject) {
+    @IBAction func homeEmailButton(_ sender: AnyObject) {
         let sender = sender
         let mailComposeViewController = configuredMailComposeViewController(sender)
         if MFMailComposeViewController.canSendMail() {
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            self.present(mailComposeViewController, animated: true, completion: nil)
         } else {
             self.showSendMailErrorAlert()
         }
@@ -80,16 +80,16 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     @IBOutlet var zipLabel: UILabel!
     
     //Option of action on phone Buttons - phone call or text message based on User's AlertController Selection
-    func showShareOptions(sender: AnyObject) {
+    func showShareOptions(_ sender: AnyObject) {
         let sender = sender
-        let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        let phoneCallAction = UIAlertAction(title: "Phone Call", style: UIAlertActionStyle.Default) { (action) -> Void in
+        let phoneCallAction = UIAlertAction(title: "Phone Call", style: UIAlertActionStyle.default) { (action) -> Void in
             switch sender.tag {
             case 1:
                 if let workPhoneText = self.workPhoneOutlet.titleLabel?.text{
-                    if let url = NSURL(string: "tel:\(workPhoneText)") {
-                        let application = UIApplication.sharedApplication()
+                    if let url = URL(string: "tel:\(workPhoneText)") {
+                        let application = UIApplication.shared
                         if application.canOpenURL(url) {
                             application.openURL(url)
                         }
@@ -100,8 +100,8 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
                 }
             case 2:
                 if let homePhoneText = self.homePhoneOutlet.titleLabel?.text {
-                    if let url = NSURL(string: "tel:\(homePhoneText)") {
-                        let application = UIApplication.sharedApplication()
+                    if let url = URL(string: "tel:\(homePhoneText)") {
+                        let application = UIApplication.shared
                         if application.canOpenURL(url) {
                             application.openURL(url)
                         }
@@ -113,8 +113,8 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
                 }
             case 3:
                 if let mobilePhoneText = self.mobilePhoneOutlet.titleLabel?.text {
-                    if let url = NSURL(string: "tel:\(mobilePhoneText)") {
-                        let application = UIApplication.sharedApplication()
+                    if let url = URL(string: "tel:\(mobilePhoneText)") {
+                        let application = UIApplication.shared
                         if application.canOpenURL(url) {
                             application.openURL(url)
                         }
@@ -129,7 +129,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         }
         
         
-        let messageAction = UIAlertAction(title: "Text Message", style: UIAlertActionStyle.Default) { (action) -> Void in
+        let messageAction = UIAlertAction(title: "Text Message", style: UIAlertActionStyle.default) { (action) -> Void in
             var phoneNumber: String
             switch sender.tag {
             case 1:
@@ -152,8 +152,8 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+            self.dismiss(animated: true, completion: nil)
         }
         
         actionSheet.addAction(phoneCallAction)
@@ -161,21 +161,21 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         actionSheet.addAction(cancelAction)
         
         //If iPad treat alert differently
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             if let popoverController = actionSheet.popoverPresentationController {
                 popoverController.sourceView = sender as? UIView
                 popoverController.sourceRect = sender.bounds
             }
-            self.presentViewController(actionSheet, animated: true, completion: nil)
+            self.present(actionSheet, animated: true, completion: nil)
         } else {
-            presentViewController(actionSheet, animated: true, completion: nil)
+            present(actionSheet, animated: true, completion: nil)
         }
         
         
     }
     
     //sending text message
-    func sendMessage(phoneNumber: String) {
+    func sendMessage(_ phoneNumber: String) {
         let phoneNumber = phoneNumber
         let messageVC = MFMessageComposeViewController()
         
@@ -183,11 +183,11 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         messageVC.recipients = ["\(phoneNumber)"] //Optionally add some telephone numbers
         messageVC.messageComposeDelegate = self;
         
-        self.presentViewController(messageVC, animated: true, completion: nil)
+        self.present(messageVC, animated: true, completion: nil)
     }
 
     //compose view controller for text message
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         /*switch (result.rawValue) {
         case MessageComposeResultCancelled.rawValue:
             print("Message was cancelled")
@@ -202,11 +202,11 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             break;
         }
         */
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        controller.dismiss(animated: true, completion: nil)
     }
     
     //methods to compose emails on view
-    func configuredMailComposeViewController(sender: AnyObject) -> MFMailComposeViewController {
+    func configuredMailComposeViewController(_ sender: AnyObject) -> MFMailComposeViewController {
         let sender = sender
         var emailAddress: String
         let mailComposerVC = MFMailComposeViewController()
@@ -234,17 +234,17 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     }
     
     func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
         //(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+            self.dismiss(animated: true, completion: nil)
         }
         sendMailErrorAlert.addAction(cancelAction)
     }
     
     // MARK: MFMailComposeViewControllerDelegate Method
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     //variable and method to compose and configure main view
@@ -266,19 +266,19 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
                 lastNameLabel.text = detail.lastName
             }
             if let workPhoneOutlet = self.workPhoneOutlet {
-                workPhoneOutlet.setTitle(detail.workPhone, forState: UIControlState.Normal)
+                workPhoneOutlet.setTitle(detail.workPhone, for: UIControlState())
             }
             if let homePhoneOutlet = self.homePhoneOutlet {
-                homePhoneOutlet.setTitle(detail.homePhone, forState: UIControlState.Normal)
+                homePhoneOutlet.setTitle(detail.homePhone, for: UIControlState())
             }
             if let mobilePhoneOutlet = self.mobilePhoneOutlet {
-                mobilePhoneOutlet.setTitle(detail.mobilePhone, forState: UIControlState.Normal)
+                mobilePhoneOutlet.setTitle(detail.mobilePhone, for: UIControlState())
             }
             if let workEmailOutlet = self.workEmailOutlet {
-                workEmailOutlet.setTitle(detail.workEmail, forState: UIControlState.Normal)
+                workEmailOutlet.setTitle(detail.workEmail, for: UIControlState())
             }
             if let homeEmailOutlet = self.homeEmailOutlet {
-                homeEmailOutlet.setTitle(detail.homeEmail, forState: UIControlState.Normal)
+                homeEmailOutlet.setTitle(detail.homeEmail, for: UIControlState())
             }
             if let addressLabel = self.addressLabel {
                 addressLabel.text = detail.address
@@ -338,7 +338,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
                 fullName = "\(detail.firstName!) \(detail.lastName!)"
             }
             
-            var keywords = fullName.componentsSeparatedByString(" ")
+            var keywords = fullName.components(separatedBy: " ")
             if detail.homePhone != nil {
                 keywords.append(detail.homePhone!)
             }
@@ -356,8 +356,8 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             }
 
             activity.keywords = Set(keywords)
-            activity.eligibleForHandoff = false
-            activity.eligibleForSearch = true
+            activity.isEligibleForHandoff = false
+            activity.isEligibleForSearch = true
             //activity.eligibleForPublicIndexing = true
             //activity.expirationDate = NSDate()
             
@@ -377,13 +377,13 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             attributeSet.relatedUniqueIdentifier = detail.firstName
             
             switch Setting.searchIndexingPreference {
-            case .Disabled:
-                activity.eligibleForSearch = false
-            case .ViewedRecords:
-                activity.eligibleForSearch = true
+            case .disabled:
+                activity.isEligibleForSearch = false
+            case .viewedRecords:
+                activity.isEligibleForSearch = true
                 activity.contentAttributeSet?.relatedUniqueIdentifier = nil
-            case .AllRecords:
-                activity.eligibleForSearch = true
+            case .allRecords:
+                activity.isEligibleForSearch = true
             }
             
             userActivity = activity
@@ -403,7 +403,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        detailScrollView.backgroundColor = UIColor.grayColor()
+        detailScrollView.backgroundColor = UIColor.gray
         
         self.automaticallyAdjustsScrollViewInsets = false
         
@@ -414,7 +414,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.configureView()
     }
 
@@ -423,10 +423,10 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editContact" {
             let object = detailItem
-                let controller = segue.destinationViewController as! EditContactViewController
+                let controller = segue.destination as! EditContactViewController
                 controller.coreDataStack = coreDataStack
                 controller.editItem = object
             }

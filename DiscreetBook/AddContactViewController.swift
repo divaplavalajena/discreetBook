@@ -29,15 +29,15 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var state: UITextField!
     @IBOutlet var zip: UITextField!
     
-    @IBAction func cancelButton(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelButton(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveButton(sender: AnyObject) {
+    @IBAction func saveButton(_ sender: AnyObject) {
 
         //Code to save new contact
-        if let entity = NSEntityDescription.entityForName("Contact", inManagedObjectContext: coreDataStack.managedObjectContext) {
-            let newContact = Contact(entity: entity, insertIntoManagedObjectContext: coreDataStack.managedObjectContext)
+        if let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) {
+            let newContact = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
             
             if let firstName = self.firstName {
                 newContact.firstName = firstName.text
@@ -45,7 +45,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             if let lastName = self.lastName {
                 newContact.lastName = lastName.text
                 if var lastInitial = lastName.text {
-                    lastInitial = lastInitial.substringToIndex(lastInitial.startIndex.advancedBy(1))
+                    lastInitial = lastInitial.substring(to: lastInitial.characters.index(lastInitial.startIndex, offsetBy: 1))
                     newContact.lastInitial = lastInitial
                     print("This is the last name initial saved to the record")
                     print(lastInitial)
@@ -53,7 +53,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 
             }else {
                 if var firstInitial = firstName.text {
-                    firstInitial = firstInitial.substringToIndex(firstInitial.startIndex.advancedBy(1))
+                    firstInitial = firstInitial.substring(to: firstInitial.characters.index(firstInitial.startIndex, offsetBy: 1))
                     newContact.lastInitial = firstInitial
                     print("This is the first name initial saved to the record")
                     print(firstInitial)
@@ -92,20 +92,20 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         
         coreDataStack.saveMainContext()
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //sendButton.enabled = true
         
         if textField == workPhone || textField == homePhone || textField == mobilePhone {
-            let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-            let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
+            let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            let components = newString.components(separatedBy: CharacterSet.decimalDigits.inverted)
             
-            let decimalString : String = components.joinWithSeparator("")
+            let decimalString : String = components.joined(separator: "")
             let length = decimalString.characters.count
             let decimalStr = decimalString as NSString
-            let hasLeadingOne = length > 0 && decimalStr.characterAtIndex(0) == (1 as unichar)
+            let hasLeadingOne = length > 0 && decimalStr.character(at: 0) == (1 as unichar)
             
             if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
             {
@@ -118,24 +118,24 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             
             if hasLeadingOne
             {
-                formattedString.appendString("1 ")
+                formattedString.append("1 ")
                 index += 1
             }
             if (length - index) > 3
             {
-                let areaCode = decimalStr.substringWithRange(NSMakeRange(index, 3))
+                let areaCode = decimalStr.substring(with: NSMakeRange(index, 3))
                 formattedString.appendFormat("(%@)", areaCode)
                 index += 3
             }
             if length - index > 3
             {
-                let prefix = decimalStr.substringWithRange(NSMakeRange(index, 3))
+                let prefix = decimalStr.substring(with: NSMakeRange(index, 3))
                 formattedString.appendFormat("%@-", prefix)
                 index += 3
             }
             
-            let remainder = decimalStr.substringFromIndex(index)
-            formattedString.appendString(remainder)
+            let remainder = decimalStr.substring(from: index)
+            formattedString.append(remainder)
             textField.text = formattedString as String
             return false
         } else {
@@ -149,13 +149,13 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        contactScrollView.backgroundColor = UIColor.grayColor()
+        contactScrollView.backgroundColor = UIColor.gray
         
         contactScrollView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
         contactScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //Brings up keyboard
         firstName.delegate = self
@@ -172,30 +172,30 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
 //    deinit {
 //        NSNotificationCenter.defaultCenter().removeObserver(self)
 //    }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         adjustInsetForKeyboardShow(true, notification: notification)
 
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         adjustInsetForKeyboardShow(false, notification: notification)
     }
     
-    func adjustInsetForKeyboardShow(show: Bool, notification: NSNotification) {
-        var userInfo = notification.userInfo ?? [:]
-        let keyboardFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+    func adjustInsetForKeyboardShow(_ show: Bool, notification: Notification) {
+        var userInfo = (notification as NSNotification).userInfo ?? [:]
+        let keyboardFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         var contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 40, right: 0)
-        let adjustmentHeight = (CGRectGetHeight(keyboardFrame)) * (show ? 1 : -1)
+        let adjustmentHeight = (keyboardFrame.height) * (show ? 1 : -1)
         
         if show == false {
             contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -213,7 +213,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         textField.resignFirstResponder()
         

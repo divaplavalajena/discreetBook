@@ -9,16 +9,16 @@
 import Foundation
 
 enum SearchIndexingPreference: Int {
-    case Disabled, ViewedRecords, AllRecords
+    case disabled, viewedRecords, allRecords
 }
 
 struct Setting {
     static var searchIndexingPreference: SearchIndexingPreference {
-        let preferenceRawValue = NSUserDefaults.standardUserDefaults().integerForKey("SearchIndexingPreference")
+        let preferenceRawValue = UserDefaults.standard.integer(forKey: "SearchIndexingPreference")
         if let preference = SearchIndexingPreference(rawValue: preferenceRawValue) {
             return preference
         } else {
-            return .Disabled
+            return .disabled
         }
     }
 }

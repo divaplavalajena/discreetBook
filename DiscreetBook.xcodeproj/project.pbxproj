@@ -283,15 +283,18 @@
 					9C096F961BFF965D00411D88 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = BU3R4YBAT8;
+						LastSwiftMigration = 0800;
 					};
 					9C096FAF1BFF965D00411D88 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = FEF46939Q9;
+						DevelopmentTeam = BU3R4YBAT8;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C096F961BFF965D00411D88;
 					};
 					9C096FBA1BFF965D00411D88 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = FEF46939Q9;
+						LastSwiftMigration = 0800;
 						TestTargetID = 9C096F961BFF965D00411D88;
 					};
 				};
@@ -523,6 +526,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bellavoceproductions.discreet-Book";
 				PRODUCT_NAME = discreetBook;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -539,6 +543,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.bellavoceproductions.discreet-Book";
 				PRODUCT_NAME = discreetBook;
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -547,11 +552,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BU3R4YBAT8;
 				INFOPLIST_FILE = discreetBookTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellavoceproductions.discreetBookTests;
 				PRODUCT_NAME = discreetBook.temp_caseinsensitive_rename;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/discreetBook.temp_caseinsensitive_rename.app/discreetBook.temp_caseinsensitive_rename";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/discreetBook.app/discreetBook";
 			};
 			name = Debug;
 		};
@@ -559,11 +566,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BU3R4YBAT8;
 				INFOPLIST_FILE = discreetBookTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellavoceproductions.discreetBookTests;
 				PRODUCT_NAME = discreetBook.temp_caseinsensitive_rename;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/discreetBook.temp_caseinsensitive_rename.app/discreetBook.temp_caseinsensitive_rename";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/discreetBook.app/discreetBook";
 			};
 			name = Release;
 		};
@@ -574,6 +583,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellavoceproductions.discreetBookUITests;
 				PRODUCT_NAME = discreetBook;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = discreetBook;
 				USES_XCTRUNNER = YES;
 			};
@@ -586,6 +596,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellavoceproductions.discreetBookUITests;
 				PRODUCT_NAME = discreetBook;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = discreetBook;
 				USES_XCTRUNNER = YES;
 			};

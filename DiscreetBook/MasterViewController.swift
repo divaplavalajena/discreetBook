@@ -18,7 +18,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var detailViewController: DetailViewController?
     var coreDataStack: CoreDataStack!
     
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
     
     var searchController: UISearchController!
     var searchPredicate: NSPredicate?
@@ -55,12 +55,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         title = "discreet Book"
         if let font = UIFont(name: "Baskerville-BoldItalic", size: 20) {
             UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font]
-            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purpleColor()]
-            UINavigationBar.appearance().tintColor = UIColor.purpleColor()
-            UINavigationBar.appearance().barTintColor = UIColor.grayColor()
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purple]
+            UINavigationBar.appearance().tintColor = UIColor.purple
+            UINavigationBar.appearance().barTintColor = UIColor.gray
         }
         
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
         //fetchedResultsController
         
@@ -81,9 +81,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         //Setting for indexing to Core Spotlight
         switch Setting.searchIndexingPreference {
-        case .Disabled:
+        case .disabled:
             destroyEmployeeIndexing()
-        case .AllRecords:
+        case .allRecords:
             setupSearchableContent()
         default: break
         }
@@ -132,7 +132,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 //Set the email address to workEmail and homeEmail
                 searchableItemAttributeSet.emailAddresses = ["\(contact.workEmail)", "\(contact.homeEmail)"]
                 
-                var keywords = fullName.componentsSeparatedByString(" ")
+                var keywords = fullName.components(separatedBy: " ")
                 if contact.homePhone != nil {
                     keywords.append(contact.homePhone!)
                 }
@@ -160,7 +160,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             //print(searchableItems)
         }
         
-        CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(searchableItems) { (error) -> Void in
+        CSSearchableIndex.default().indexSearchableItems(searchableItems) { (error) -> Void in
             if error != nil {
                 print(error?.localizedDescription)
             }
@@ -173,8 +173,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func destroyEmployeeIndexing() {
         CSSearchableIndex
-            .defaultSearchableIndex()
-            .deleteAllSearchableItemsWithCompletionHandler { error in
+            .default()
+            .deleteAllSearchableItems { error in
                 if let error = error {
                     print("Error deleting searching employee items: \(error)")
                 } else {
@@ -187,34 +187,34 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     // MARK: - UISearchResultsUpdating Delegate Method
     // Called when the search bar's text or scope has changed or when the search bar becomes first responder.
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         let searchText = self.searchController?.searchBar.text
         //print(searchController.searchBar.text)
         if let searchText = searchText {
             searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@ OR workPhone contains[c] %@ OR homePhone contains[c] %@ OR mobilePhone contains[c] %@", searchText, searchText, searchText, searchText, searchText)
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
-                return self.searchPredicate!.evaluateWithObject($0)
+                return self.searchPredicate!.evaluate(with: $0)
                 } as! [Contact]?
             self.tableView.reloadData()
             //print(searchPredicate)
         }
     }
     
-    func didDismissSearchController(searchController: UISearchController) {
+    func didDismissSearchController(_ searchController: UISearchController) {
         searchPredicate = nil
         filteredObjects = nil
         reloadData()
     }
 
-    override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+    override func viewWillAppear(_ animated: Bool) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         super.viewWillAppear(animated)
         
         reloadData()
         
     }
     
-    func reloadData(predicate: NSPredicate? = nil) {
+    func reloadData(_ predicate: NSPredicate? = nil) {
         //let fetchRequest = NSFetchRequest(entityName: "Contact")
         if searchPredicate == nil {
             fetchedResultsController.fetchRequest.predicate = predicate
@@ -226,7 +226,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         } else {
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
-                return self.searchPredicate!.evaluateWithObject($0)
+                return self.searchPredicate!.evaluate(with: $0)
             } as! [Contact]?
             //contact = filteredObjects![indexPath.row] as! Contact
         }
@@ -242,67 +242,67 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     // MARK: - Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if searchPredicate == nil {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-                    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                let object = self.fetchedResultsController.object(at: indexPath)
+                    let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                     controller.detailItem = object as? Contact
-                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                     controller.navigationItem.leftItemsSupplementBackButton = true
                     controller.coreDataStack = coreDataStack
                 } else if let show = showToRestore {
-                    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                    let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                     controller.detailItem = show
-                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                     controller.navigationItem.leftItemsSupplementBackButton = true
                 }
             }else {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
-                    let object = filteredObjects?[indexPath.row]
-                    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                    let object = filteredObjects?[(indexPath as NSIndexPath).row]
+                    let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                     controller.detailItem = object
-                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                    controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                     controller.navigationItem.leftItemsSupplementBackButton = true
                     controller.coreDataStack = coreDataStack
                 }
             }
         }
         if segue.identifier == "addContact" {
-            let controller = segue.destinationViewController as! AddContactViewController
+            let controller = segue.destination as! AddContactViewController
             controller.coreDataStack = coreDataStack
             
         }
 
     }
     
-    override func restoreUserActivityState(activity: NSUserActivity) {
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
         
         if let firstName = activity.userInfo?["firstName"] as? String {
-                let show = self.fetchedResultsController.valueForKey(firstName) as? Contact
+                let show = self.fetchedResultsController.value(forKey: firstName) as? Contact
                 //(firstName: firstName, lastName: lastName)
                 /*, homePhone: homePhone, workPhone: workPhone, mobilePhone: mobilePhone, workEmail: workEmail, homeEmail: homeEmail */
                 self.showToRestore = show
                 
-                self.performSegueWithIdentifier("showDetail", sender: self)
+                self.performSegue(withIdentifier: "showDetail", sender: self)
         } else if activity.activityType == CSSearchableItemActionType {
             if let userInfo = activity.userInfo {
                 let selectedContact = userInfo[CSSearchableItemActivityIdentifier] as! String
                 let show = contactWithFirstName(selectedContact)
                 self.showToRestore = show
-                performSegueWithIdentifier("showDetail", sender: self)
+                performSegue(withIdentifier: "showDetail", sender: self)
             }
         }
         else {
-            let alert = UIAlertController(title: "Error", message: "Error retrieving information from userInfo:\n\(activity.userInfo)", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+            let alert = UIAlertController(title: "Error", message: "Error retrieving information from userInfo:\n\(activity.userInfo)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func contactWithFirstName(firstName: String) -> Contact? {
+    func contactWithFirstName(_ firstName: String) -> Contact? {
         let fetchRequest = NSFetchRequest(entityName: "Contact")
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -315,7 +315,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     // MARK: - Table View
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if searchPredicate == nil {
             return self.fetchedResultsController.sections?.count ?? 0
         } else {
@@ -323,7 +323,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.searchPredicate == nil {
             let sectionInfo = self.fetchedResultsController.sections![section]
             return sectionInfo.numberOfObjects
@@ -332,7 +332,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return fetchedResultsController.sections?[section].name
         //collation.sectionTitles[section]
                     //fetchedResultsController.sections?[section].name
@@ -348,16 +348,16 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     */
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         if searchPredicate == nil {
             self.configureCell(cell, atIndexPath: indexPath)
             return cell
         } else {
             // configure the cell based on filteredObjects data
-            let contact = filteredObjects?[indexPath.row]
-            if let lastName = contact?.lastName, firstName = contact?.firstName {
+            let contact = filteredObjects?[(indexPath as NSIndexPath).row]
+            if let lastName = contact?.lastName, let firstName = contact?.firstName {
                 cell.textLabel!.text = "\(firstName) \(lastName)"
             }
             
@@ -365,26 +365,26 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             var contact: Contact
             if searchPredicate == nil {
-                contact = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
-                deindexItem(indexPath.row)
+                contact = self.fetchedResultsController.object(at: indexPath) as! Contact
+                deindexItem((indexPath as NSIndexPath).row)
             } else {
                 let filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
-                    return self.searchPredicate!.evaluateWithObject($0)
+                    return self.searchPredicate!.evaluate(with: $0)
                 }
-                contact = filteredObjects![indexPath.row] as! Contact
-                deindexItem(indexPath.row)
+                contact = filteredObjects![(indexPath as NSIndexPath).row] as! Contact
+                deindexItem((indexPath as NSIndexPath).row)
             }
             let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(contact)
+            context.delete(contact)
             
             coreDataStack.saveMainContext()
             
@@ -395,8 +395,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     }
     
-    func deindexItem(which: Int) {
-        CSSearchableIndex.defaultSearchableIndex().deleteSearchableItemsWithIdentifiers(["\(which)"]) { (error: NSError?) -> Void in
+    func deindexItem(_ which: Int) {
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(which)"]) { (error: NSError?) -> Void in
             if let error = error {
                 print("Deindexing error: \(error.localizedDescription)")
             } else {
@@ -407,9 +407,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     
 
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Contact
-        if let lastName = object.lastName, firstName = object.firstName {
+    func configureCell(_ cell: UITableViewCell, atIndexPath indexPath: IndexPath) {
+        let object = self.fetchedResultsController.object(at: indexPath) as! Contact
+        if let lastName = object.lastName, let firstName = object.firstName {
             cell.textLabel!.text = "\(firstName) \(lastName)"
         }
         
@@ -469,11 +469,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 //    
 //    var _fetchedResultsController: NSFetchedResultsController? = nil
 
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         /*
         var tableView = UITableView()
         if searchPredicate == nil {
@@ -484,16 +484,16 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         */
         
         switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .insert:
+                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            case .delete:
+                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
             default:
                 return
         }
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         var tableView = UITableView()
         
@@ -504,21 +504,21 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         switch type {
-            case .Insert:
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
+            case .insert:
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
+            case .delete:
                 print("*** NSFetchedResultsChangeDelete (object)")
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Update:
+                tableView.deleteRows(at: [indexPath!], with: .fade)
+            case .update:
                 print("*** NSFetchedResultsChangeUpdate (object)")
-                self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath: indexPath!) // original code
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                self.configureCell(tableView.cellForRow(at: indexPath!)!, atIndexPath: indexPath!) // original code
+            case .move:
+                tableView.deleteRows(at: [indexPath!], with: .fade)
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
 
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if self.searchPredicate == nil {
             self.tableView.endUpdates()
         } else {
