@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     lazy var coreDataStack = CoreDataStack()
-    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
+    
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -31,10 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         */
         
-        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
         
         do {
-            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as! [Contact]
+            let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
             if results.count == 0 {
                 addTestData()
             }
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
 
         if let tab = window?.rootViewController as? UISplitViewController {
-            for child in tab.viewControllers ?? [] {
+            for child in tab.viewControllers {
                 if let child = child as? UINavigationController, let top = child.topViewController {
                     if top.responds(to: #selector(setter: AppDelegate.coreDataStack)) {
                         top.perform(#selector(setter: AppDelegate.coreDataStack), with: coreDataStack)
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             if let detailVC = navigationController.topViewController as? DetailViewController {
                 if detailVC.detailItem == nil {
                     do {
-                        let results = try coreDataStack.managedObjectContext.fetch(fetchRequest) as! [Contact]
+                        let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
                         if results.count != 0 {
                             detailVC.detailItem = results[0]
                         }
@@ -243,14 +243,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func contactWithFirstName(_ firstName: String) -> Contact? {
-        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        var fetchedResultsController: NSFetchedResultsController<Contact>!
+        
+        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
-        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
-        let filteredContacts = contacts.filter { $0.firstName == firstName }
+        let contacts = fetchedResultsController.fetchedObjects
+        let filteredContacts = contacts?.filter { $0.firstName == firstName }
         
-        return filteredContacts.first
+        return filteredContacts?.first
     }
 
     

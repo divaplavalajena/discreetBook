@@ -16,9 +16,9 @@
 		9C096FAA1BFF965D00411D88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */; };
 		9C096FB51BFF965D00411D88 /* discreetBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FB41BFF965D00411D88 /* discreetBookTests.swift */; };
 		9C096FC01BFF965D00411D88 /* discreetBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FBF1BFF965D00411D88 /* discreetBookUITests.swift */; };
-		9C096FCF1BFFA10A00411D88 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */; };
 		9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCE1BFFA10A00411D88 /* Contact.swift */; };
 		9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */; };
+		9C3113731D8CBF9800735C07 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3113721D8CBF9800735C07 /* Contact+CoreDataProperties.swift */; };
 		9C6449C81C751F9F00BDFA17 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */; };
 		9C6449CA1C751FAC00BDFA17 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */; };
 		9C6449D31C7E56EB00BDFA17 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6449D21C7E56EB00BDFA17 /* Setting.swift */; };
@@ -74,9 +74,9 @@
 		9C096FBB1BFF965D00411D88 /* discreetBook.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = discreetBook.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C096FBF1BFF965D00411D88 /* discreetBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = discreetBookUITests.swift; sourceTree = "<group>"; };
 		9C096FC11BFF965D00411D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C096FCE1BFFA10A00411D88 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		9C3113721D8CBF9800735C07 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataProperties.swift"; path = "discreetBook/Contact+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9C6449D21C7E56EB00BDFA17 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -154,21 +154,11 @@
 		9C096F991BFF965D00411D88 /* discreetBook */ = {
 			isa = PBXGroup;
 			children = (
-				9C096FCD1BFFA10A00411D88 /* Contact+CoreDataProperties.swift */,
-				9C096FCE1BFFA10A00411D88 /* Contact.swift */,
 				9C096F9A1BFF965D00411D88 /* AppDelegate.swift */,
-				9CB0ED551C127E65006E1327 /* CoreDataStack.swift */,
-				9C096F9F1BFF965D00411D88 /* MasterViewController.swift */,
-				9C096FA11BFF965D00411D88 /* DetailViewController.swift */,
-				9C096FA31BFF965D00411D88 /* Main.storyboard */,
-				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
-				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
 				9C6449D21C7E56EB00BDFA17 /* Setting.swift */,
-				9C096FA61BFF965D00411D88 /* Assets.xcassets */,
-				9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */,
-				9C6449CD1C7CCC5400BDFA17 /* Images */,
-				9C096FAB1BFF965D00411D88 /* Info.plist */,
-				9C096F9C1BFF965D00411D88 /* discreetBook.xcdatamodeld */,
+				9C31136D1D8CBE8F00735C07 /* Model */,
+				9C31136E1D8CBEB800735C07 /* Controller */,
+				9C31136F1D8CBED600735C07 /* Assets */,
 			);
 			name = discreetBook;
 			path = DiscreetBook;
@@ -192,6 +182,40 @@
 			);
 			name = discreetBookUITests;
 			path = DiscreetBookUITests;
+			sourceTree = "<group>";
+		};
+		9C31136D1D8CBE8F00735C07 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9C096F9C1BFF965D00411D88 /* discreetBook.xcdatamodeld */,
+				9C3113721D8CBF9800735C07 /* Contact+CoreDataProperties.swift */,
+				9C096FCE1BFFA10A00411D88 /* Contact.swift */,
+				9CB0ED551C127E65006E1327 /* CoreDataStack.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9C31136E1D8CBEB800735C07 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9C096F9F1BFF965D00411D88 /* MasterViewController.swift */,
+				9C096FA11BFF965D00411D88 /* DetailViewController.swift */,
+				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
+				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9C31136F1D8CBED600735C07 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9C096FA31BFF965D00411D88 /* Main.storyboard */,
+				9C096FA61BFF965D00411D88 /* Assets.xcassets */,
+				9C096FA81BFF965D00411D88 /* LaunchScreen.storyboard */,
+				9C096FAB1BFF965D00411D88 /* Info.plist */,
+				9C6449CD1C7CCC5400BDFA17 /* Images */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		9C6449CD1C7CCC5400BDFA17 /* Images */ = {
@@ -371,8 +395,8 @@
 				9C096F9E1BFF965D00411D88 /* discreetBook.xcdatamodeld in Sources */,
 				9C096FA01BFF965D00411D88 /* MasterViewController.swift in Sources */,
 				9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */,
+				9C3113731D8CBF9800735C07 /* Contact+CoreDataProperties.swift in Sources */,
 				9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */,
-				9C096FCF1BFFA10A00411D88 /* Contact+CoreDataProperties.swift in Sources */,
 				9C096FA21BFF965D00411D88 /* DetailViewController.swift in Sources */,
 				9CB0ED561C127E65006E1327 /* CoreDataStack.swift in Sources */,
 			);

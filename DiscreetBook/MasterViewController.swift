@@ -18,7 +18,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var detailViewController: DetailViewController?
     var coreDataStack: CoreDataStack!
     
-    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
+    var fetchedResultsController: NSFetchedResultsController<Contact>!
     
     var searchController: UISearchController!
     var searchPredicate: NSPredicate?
@@ -64,7 +64,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         //fetchedResultsController
         
-        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "lastName", ascending: true), NSSortDescriptor(key: "firstName", ascending: true)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: "lastInitial", cacheName: nil)
@@ -102,7 +102,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         if fetchedResultsController != nil {
-            spotlightSearch = self.fetchedResultsController.fetchedObjects as! [Contact]?
+            spotlightSearch = self.fetchedResultsController.fetchedObjects
         
             for contact in spotlightSearch! {
                 
@@ -194,7 +194,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             searchPredicate = NSPredicate(format: "firstName contains[c] %@ OR lastName contains[c] %@ OR workPhone contains[c] %@ OR homePhone contains[c] %@ OR mobilePhone contains[c] %@", searchText, searchText, searchText, searchText, searchText)
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                 return self.searchPredicate!.evaluate(with: $0)
-                } as! [Contact]?
+                }
             self.tableView.reloadData()
             //print(searchPredicate)
         }
@@ -227,7 +227,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         } else {
             filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                 return self.searchPredicate!.evaluate(with: $0)
-            } as! [Contact]?
+            }
             //contact = filteredObjects![indexPath.row] as! Contact
         }
         
@@ -248,7 +248,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 if let indexPath = self.tableView.indexPathForSelectedRow {
                 let object = self.fetchedResultsController.object(at: indexPath)
                     let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                    controller.detailItem = object as? Contact
+                    controller.detailItem = object
                     controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                     controller.navigationItem.leftItemsSupplementBackButton = true
                     controller.coreDataStack = coreDataStack
@@ -303,14 +303,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     func contactWithFirstName(_ firstName: String) -> Contact? {
-        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
-        let contacts = fetchedResultsController.fetchedObjects as! [Contact]
-        let filteredContacts = contacts.filter { $0.firstName == firstName }
+        let contacts = fetchedResultsController.fetchedObjects
+        let filteredContacts = contacts?.filter { $0.firstName == firstName }
         
-        return filteredContacts.first
+        return filteredContacts?.first
     }
 
     // MARK: - Table View
@@ -374,13 +374,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if editingStyle == .delete {
             var contact: Contact
             if searchPredicate == nil {
-                contact = self.fetchedResultsController.object(at: indexPath) as! Contact
+                contact = self.fetchedResultsController.object(at: indexPath)
                 deindexItem((indexPath as NSIndexPath).row)
             } else {
                 let filteredObjects = self.fetchedResultsController.fetchedObjects?.filter() {
                     return self.searchPredicate!.evaluate(with: $0)
                 }
-                contact = filteredObjects![(indexPath as NSIndexPath).row] as! Contact
+                contact = filteredObjects![(indexPath as NSIndexPath).row]
                 deindexItem((indexPath as NSIndexPath).row)
             }
             let context = self.fetchedResultsController.managedObjectContext
@@ -396,7 +396,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     func deindexItem(_ which: Int) {
-        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(which)"]) { (error: NSError?) -> Void in
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(which)"]) { (error: Error?) -> Void in
             if let error = error {
                 print("Deindexing error: \(error.localizedDescription)")
             } else {
@@ -408,7 +408,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
 
     func configureCell(_ cell: UITableViewCell, atIndexPath indexPath: IndexPath) {
-        let object = self.fetchedResultsController.object(at: indexPath) as! Contact
+        let object = self.fetchedResultsController.object(at: indexPath)
         if let lastName = object.lastName, let firstName = object.firstName {
             cell.textLabel!.text = "\(firstName) \(lastName)"
         }
