@@ -38,6 +38,8 @@
 		9C88059C1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */; };
 		9C88059E1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */; };
 		9CB0ED561C127E65006E1327 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB0ED551C127E65006E1327 /* CoreDataStack.swift */; };
+		9CB32A761DBE73DA00C09637 /* discreetBookIcon2-60X60.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB32A751DBE73DA00C09637 /* discreetBookIcon2-60X60.png */; };
+		9CB32A781DBE740D00C09637 /* discreetBookIcon2-20X20.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CB32A771DBE740D00C09637 /* discreetBookIcon2-20X20.png */; };
 		9CCFF3F51C32794C00B72073 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCFF3F41C32794C00B72073 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-40X40@1X.png"; path = "../discreetBookIcon2-40X40@1X.png"; sourceTree = "<group>"; };
 		9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-600X600Launch5S.png"; path = "../discreetBookIcon2-600X600Launch5S.png"; sourceTree = "<group>"; };
 		9CB0ED551C127E65006E1327 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		9CB32A751DBE73DA00C09637 /* discreetBookIcon2-60X60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discreetBookIcon2-60X60.png"; sourceTree = "<group>"; };
+		9CB32A771DBE740D00C09637 /* discreetBookIcon2-20X20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discreetBookIcon2-20X20.png"; sourceTree = "<group>"; };
 		9CCFF3F41C32794C00B72073 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -223,7 +227,9 @@
 			children = (
 				9C88059D1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png */,
 				9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */,
+				9CB32A771DBE740D00C09637 /* discreetBookIcon2-20X20.png */,
 				9C88059B1C1B72B900BB0317 /* discreetBookIcon2-40X40@1X.png */,
+				9CB32A751DBE73DA00C09637 /* discreetBookIcon2-60X60.png */,
 				9C8805991C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png */,
 				9C8805971C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png */,
 				9C8805951C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png */,
@@ -350,6 +356,7 @@
 			files = (
 				9C6449D51C7E680200BDFA17 /* Settings.bundle in Resources */,
 				9C096FAA1BFF965D00411D88 /* LaunchScreen.storyboard in Resources */,
+				9CB32A761DBE73DA00C09637 /* discreetBookIcon2-60X60.png in Resources */,
 				9C8805881C1B6D0700BB0317 /* discreetBookIcon2.png in Resources */,
 				9C88059E1C1B760800BB0317 /* discreetBookIcon2-600X600Launch5S.png in Resources */,
 				9C88059A1C1B72B300BB0317 /* discreetBookIcon2-29X29@1X.png in Resources */,
@@ -358,6 +365,7 @@
 				9C8805981C1B72A900BB0317 /* discreetBookIcon2-76X76@1X.png in Resources */,
 				9C88058C1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png in Resources */,
 				9C88058E1C1B716A00BB0317 /* discreetBookIcon2-87X87@3X.png in Resources */,
+				9CB32A781DBE740D00C09637 /* discreetBookIcon2-20X20.png in Resources */,
 				9C8805901C1B717200BB0317 /* discreetBookIcon2-120X120@2X.png in Resources */,
 				9C8805921C1B718A00BB0317 /* discreetBookIcon2-120X120@3X.png in Resources */,
 				9C8805961C1B729900BB0317 /* discreetBookIcon2-152X152@2X.png in Resources */,
