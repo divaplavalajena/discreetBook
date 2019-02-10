@@ -17,8 +17,8 @@
 		9C096FB51BFF965D00411D88 /* discreetBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FB41BFF965D00411D88 /* discreetBookTests.swift */; };
 		9C096FC01BFF965D00411D88 /* discreetBookUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FBF1BFF965D00411D88 /* discreetBookUITests.swift */; };
 		9C096FD01BFFA10A00411D88 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FCE1BFFA10A00411D88 /* Contact.swift */; };
-		9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */; };
 		9C3113731D8CBF9800735C07 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3113721D8CBF9800735C07 /* Contact+CoreDataProperties.swift */; };
+		9C5877A52210EE470037616E /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5877A42210EE470037616E /* AddContactViewController.swift */; };
 		9C6449C81C751F9F00BDFA17 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */; };
 		9C6449CA1C751FAC00BDFA17 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */; };
 		9C6449D31C7E56EB00BDFA17 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6449D21C7E56EB00BDFA17 /* Setting.swift */; };
@@ -77,8 +77,8 @@
 		9C096FBF1BFF965D00411D88 /* discreetBookUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = discreetBookUITests.swift; sourceTree = "<group>"; };
 		9C096FC11BFF965D00411D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C096FCE1BFFA10A00411D88 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		9C3113721D8CBF9800735C07 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataProperties.swift"; path = "discreetBook/Contact+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		9C5877A42210EE470037616E /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddContactViewController.swift; path = discreetBook/AddContactViewController.swift; sourceTree = SOURCE_ROOT; };
 		9C6449C71C751F9F00BDFA17 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		9C6449C91C751FAC00BDFA17 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9C6449D21C7E56EB00BDFA17 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				9C096F9F1BFF965D00411D88 /* MasterViewController.swift */,
 				9C096FA11BFF965D00411D88 /* DetailViewController.swift */,
 				9C88057D1C19261B00BB0317 /* EditContactViewController.swift */,
-				9C096FD51BFFCA7700411D88 /* AddContactViewController.swift */,
+				9C5877A42210EE470037616E /* AddContactViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,7 +402,7 @@
 				9C096F9B1BFF965D00411D88 /* AppDelegate.swift in Sources */,
 				9C096F9E1BFF965D00411D88 /* discreetBook.xcdatamodeld in Sources */,
 				9C096FA01BFF965D00411D88 /* MasterViewController.swift in Sources */,
-				9C096FD61BFFCA7700411D88 /* AddContactViewController.swift in Sources */,
+				9C5877A52210EE470037616E /* AddContactViewController.swift in Sources */,
 				9C3113731D8CBF9800735C07 /* Contact+CoreDataProperties.swift in Sources */,
 				9C88057E1C19261B00BB0317 /* EditContactViewController.swift in Sources */,
 				9C096FA21BFF965D00411D88 /* DetailViewController.swift in Sources */,
