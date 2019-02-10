@@ -14,7 +14,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     var coreDataStack: CoreDataStack!
     
     var newContact: Contact?
-    
+ 
     @IBOutlet var contactScrollView: UIScrollView!
     
     @IBOutlet var firstName: UITextField!
@@ -29,12 +29,19 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var state: UITextField!
     @IBOutlet var zip: UITextField!
     
-    @IBAction func cancelButton(_ sender: AnyObject) {
+    @IBAction func cancelButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    
+    @IBAction func saveButton(_ sender: Any) {
+        saveContact()
+        
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveButton(_ sender: AnyObject) {
-
+    
+    func saveContact() {
         //Code to save new contact
         if let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
@@ -59,7 +66,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                     print(firstInitial)
                 }
             }
-
+            
             
             if let workPhone = self.workPhone {
                 newContact.workPhone = workPhone.text
@@ -91,8 +98,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         }
         
         coreDataStack.saveMainContext()
-        
-        dismiss(animated: true, completion: nil)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
