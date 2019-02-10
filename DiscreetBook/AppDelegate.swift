@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         do {
             let results = try coreDataStack.managedObjectContext.fetch(fetchRequest)
             if results.count == 0 {
-                //addTestData()
+                addTestData()
             }
         } catch {
             print("There was a fetch error!")
