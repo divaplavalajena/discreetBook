@@ -15,7 +15,7 @@ import MobileCoreServices
 
 class DetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
     
-    var coreDataStack: CoreDataStack!
+    @objc var coreDataStack: CoreDataStack!
     var editViewController: EditContactViewController?
     
     @IBOutlet var detailScrollView: UIScrollView!
@@ -82,9 +82,9 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     //Option of action on phone Buttons - phone call or text message based on User's AlertController Selection
     func showShareOptions(_ sender: AnyObject) {
         let sender = sender
-        let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let actionSheet = UIAlertController(title: "", message: "Call or Text", preferredStyle: UIAlertController.Style.actionSheet)
         
-        let phoneCallAction = UIAlertAction(title: "Phone Call", style: UIAlertActionStyle.default) { (action) -> Void in
+        let phoneCallAction = UIAlertAction(title: "Phone Call", style: UIAlertAction.Style.default) { (action) -> Void in
             switch sender.tag {
             case 1:
                 if let workPhoneText = self.workPhoneOutlet.titleLabel?.text{
@@ -129,7 +129,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         }
         
         
-        let messageAction = UIAlertAction(title: "Text Message", style: UIAlertActionStyle.default) { (action) -> Void in
+        let messageAction = UIAlertAction(title: "Text Message", style: UIAlertAction.Style.default) { (action) -> Void in
             var phoneNumber: String
             switch sender.tag {
             case 1:
@@ -152,7 +152,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
             self.dismiss(animated: true, completion: nil)
         }
         
@@ -234,9 +234,9 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     }
     
     func showSendMailErrorAlert() {
-        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertControllerStyle.alert)
+        let sendMailErrorAlert = UIAlertController(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", preferredStyle: UIAlertController.Style.alert)
         //(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (action) -> Void in
             self.dismiss(animated: true, completion: nil)
         }
         sendMailErrorAlert.addAction(cancelAction)
@@ -266,19 +266,19 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
                 lastNameLabel.text = detail.lastName
             }
             if let workPhoneOutlet = self.workPhoneOutlet {
-                workPhoneOutlet.setTitle(detail.workPhone, for: UIControlState())
+                workPhoneOutlet.setTitle(detail.workPhone, for: UIControl.State())
             }
             if let homePhoneOutlet = self.homePhoneOutlet {
-                homePhoneOutlet.setTitle(detail.homePhone, for: UIControlState())
+                homePhoneOutlet.setTitle(detail.homePhone, for: UIControl.State())
             }
             if let mobilePhoneOutlet = self.mobilePhoneOutlet {
-                mobilePhoneOutlet.setTitle(detail.mobilePhone, for: UIControlState())
+                mobilePhoneOutlet.setTitle(detail.mobilePhone, for: UIControl.State())
             }
             if let workEmailOutlet = self.workEmailOutlet {
-                workEmailOutlet.setTitle(detail.workEmail, for: UIControlState())
+                workEmailOutlet.setTitle(detail.workEmail, for: UIControl.State())
             }
             if let homeEmailOutlet = self.homeEmailOutlet {
-                homeEmailOutlet.setTitle(detail.homeEmail, for: UIControlState())
+                homeEmailOutlet.setTitle(detail.homeEmail, for: UIControl.State())
             }
             if let addressLabel = self.addressLabel {
                 addressLabel.text = detail.address

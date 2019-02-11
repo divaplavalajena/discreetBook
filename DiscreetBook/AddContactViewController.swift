@@ -52,7 +52,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             if let lastName = self.lastName {
                 newContact.lastName = lastName.text
                 if var lastInitial = lastName.text {
-                    lastInitial = lastInitial.substring(to: lastInitial.characters.index(lastInitial.startIndex, offsetBy: 1))
+//                    lastInitial = lastInitial.substring(to: lastInitial.characters.index(lastInitial.startIndex, offsetBy: 1))
+                    let indexStart = lastInitial.index(lastInitial.startIndex, offsetBy: 1)
+                    lastInitial = String(lastInitial[indexStart])
                     newContact.lastInitial = lastInitial
                     print("This is the last name initial saved to the record")
                     print(lastInitial)
@@ -60,7 +62,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 
             }else {
                 if var firstInitial = firstName.text {
-                    firstInitial = firstInitial.substring(to: firstInitial.characters.index(firstInitial.startIndex, offsetBy: 1))
+//                    firstInitial = firstInitial.substring(to: firstInitial.characters.index(firstInitial.startIndex, offsetBy: 1))
+                    let indexStart = firstInitial.index(firstInitial.startIndex, offsetBy: 1)
+                    firstInitial = String(firstInitial[indexStart])
                     newContact.lastInitial = firstInitial
                     print("This is the first name initial saved to the record")
                     print(firstInitial)
@@ -108,7 +112,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             let components = newString.components(separatedBy: CharacterSet.decimalDigits.inverted)
             
             let decimalString : String = components.joined(separator: "")
-            let length = decimalString.characters.count
+            let length = decimalString.count
             let decimalStr = decimalString as NSString
             let hasLeadingOne = length > 0 && decimalStr.character(at: 0) == (1 as unichar)
             
@@ -159,8 +163,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         contactScrollView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
         contactScrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        observeKeyboardNotifications()
         
         //Brings up keyboard
         firstName.delegate = self
@@ -183,22 +186,54 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
+    fileprivate func observeKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
 //    deinit {
 //        NSNotificationCenter.defaultCenter().removeObserver(self)
 //    }
     
-    func keyboardWillShow(_ notification: Notification) {
-        adjustInsetForKeyboardShow(true, notification: notification)
-
+    // variable to save the last position visited, default to zero
+    private var lastContentOffset: CGFloat = 0
+    
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+            // move up
+        }
+        else if (self.lastContentOffset < scrollView.contentOffset.y) {
+            // move down
+        }
+        
+        // update the new position acquired
+        self.lastContentOffset = scrollView.contentOffset.y
     }
     
-    func keyboardWillHide(_ notification: Notification) {
-        adjustInsetForKeyboardShow(false, notification: notification)
+    @objc func keyboardWillShow(_ notification: Notification) {
+//        adjustInsetForKeyboardShow(true, notification: notification)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            print("notification: Keyboard will show")
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+//        adjustInsetForKeyboardShow(false, notification: notification)
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
     
     func adjustInsetForKeyboardShow(_ show: Bool, notification: Notification) {
         var userInfo = (notification as NSNotification).userInfo ?? [:]
-        let keyboardFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         var contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height + 40, right: 0)
         let adjustmentHeight = (keyboardFrame.height) * (show ? 1 : -1)
         

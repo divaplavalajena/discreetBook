@@ -36,7 +36,7 @@ class CoreDataStack: NSObject {
     
     
     lazy var managedObjectModel: NSManagedObjectModel = {
-        let modelURL = Bundle.main.url(forResource: moduleName, withExtension: "momd")!
+        let modelURL = Bundle.main.url(forResource: CoreDataStack.moduleName, withExtension: "momd")!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
@@ -48,7 +48,7 @@ class CoreDataStack: NSObject {
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        let persistentStoreURL = self.applicationDocumentsDirectory.appendingPathComponent("\(moduleName).sqlite")
+        let persistentStoreURL = self.applicationDocumentsDirectory.appendingPathComponent("\(CoreDataStack.moduleName).sqlite")
         
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,

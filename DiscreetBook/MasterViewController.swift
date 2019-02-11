@@ -16,7 +16,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     //private var collapseDetailViewController = true
 
     var detailViewController: DetailViewController?
-    var coreDataStack: CoreDataStack!
+    @objc var coreDataStack: CoreDataStack!
     
     var fetchedResultsController: NSFetchedResultsController<Contact>!
     
@@ -54,8 +54,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Do any additional setup after loading the view, typically from a nib.
         title = "discreet Book"
         if let font = UIFont(name: "Baskerville-BoldItalic", size: 20) {
-            UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: font]
-            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.purple]
+            UINavigationBar.appearance().titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.font.rawValue: font])
+            UINavigationBar.appearance().titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.purple])
             UINavigationBar.appearance().tintColor = UIColor.purple
             UINavigationBar.appearance().barTintColor = UIColor.gray
         }
@@ -370,7 +370,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             var contact: Contact
             if searchPredicate == nil {
@@ -539,3 +539,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
