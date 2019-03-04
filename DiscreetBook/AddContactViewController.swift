@@ -42,6 +42,12 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     
     func saveContact() {
+        //TODO: add error alert for user to enter info if fields are blank so we don't try to save nil info
+        guard !(firstName.text?.isEmpty)! || !(lastName.text?.isEmpty)! else {
+            // TODO: add error alert here for user
+            return
+        }
+        
         //Code to save new contact
         if let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
@@ -187,15 +193,14 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func observeKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AddContactViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-//    deinit {
-//        NSNotificationCenter.defaultCenter().removeObserver(self)
-//    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     // variable to save the last position visited, default to zero
     private var lastContentOffset: CGFloat = 0
@@ -213,22 +218,27 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-//        adjustInsetForKeyboardShow(true, notification: notification)
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            print("notification: Keyboard will show")
-            if self.view.frame.origin.y == 0{
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {return}
+        print(duration) // you got animation's duration safely unwraped as a double
+        adjustInsetForKeyboardShow(true, notification: notification)
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            print("notification: Keyboard will show")
+//            if self.view.frame.origin.y == 0{
+//                self.view.frame.origin.y -= keyboardSize.height
+//            }
+//        }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-//        adjustInsetForKeyboardShow(false, notification: notification)
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y += keyboardSize.height
-            }
-        }
+//        UIView.animate(withDuration: <#T##TimeInterval#>, animations: <#T##() -> Void#>)
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {return}
+        print(duration) // you got animation's duration safely unwraped as a double
+        adjustInsetForKeyboardShow(false, notification: notification)
+//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            if self.view.frame.origin.y != 0 {
+//                self.view.frame.origin.y += keyboardSize.height
+//            }
+//        }
     }
     
     func adjustInsetForKeyboardShow(_ show: Bool, notification: Notification) {
@@ -246,10 +256,13 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         contactScrollView.scrollIndicatorInsets.top = adjustmentHeight
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true
     }
     
     
@@ -275,15 +288,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

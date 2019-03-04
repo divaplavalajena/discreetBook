@@ -1259,38 +1259,38 @@
                         <viewLayoutGuide key="safeArea" id="ivm-WP-jsx"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="fWd-EV-vUb"/>
+                                <exclude reference="yqK-5o-2Ts"/>
                                 <exclude reference="BdI-JU-3c5"/>
                                 <exclude reference="D92-VO-TAa"/>
                                 <exclude reference="Mdu-gZ-NZA"/>
                                 <exclude reference="PaS-5l-3Pv"/>
-                                <exclude reference="fWd-EV-vUb"/>
                                 <exclude reference="jF6-PZ-7S7"/>
                                 <exclude reference="tN4-fM-lbw"/>
-                                <exclude reference="yqK-5o-2Ts"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
+                                <exclude reference="OgS-ah-5LQ"/>
+                                <include reference="fWd-EV-vUb"/>
                                 <exclude reference="4fu-so-beW"/>
                                 <exclude reference="5iT-Jr-fe1"/>
                                 <include reference="Mdu-gZ-NZA"/>
                                 <include reference="PaS-5l-3Pv"/>
-                                <include reference="fWd-EV-vUb"/>
                                 <include reference="jF6-PZ-7S7"/>
                                 <exclude reference="jJf-Gv-q5Z"/>
-                                <exclude reference="OgS-ah-5LQ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
+                                <exclude reference="OgS-ah-5LQ"/>
+                                <include reference="yqK-5o-2Ts"/>
                                 <exclude reference="4fu-so-beW"/>
                                 <exclude reference="5iT-Jr-fe1"/>
                                 <include reference="BdI-JU-3c5"/>
                                 <include reference="D92-VO-TAa"/>
                                 <exclude reference="jJf-Gv-q5Z"/>
                                 <include reference="tN4-fM-lbw"/>
-                                <exclude reference="OgS-ah-5LQ"/>
-                                <include reference="yqK-5o-2Ts"/>
                             </mask>
                         </variation>
                     </view>
@@ -1377,7 +1377,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="mUY-BO-Tgn">
                             <color key="tintColor" red="0.50196081399917603" green="0.0" blue="0.50196081399917603" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="pLH-Le-JVk" kind="show" identifier="addContact" id="rFm-PZ-x29"/>
+                                <segue destination="pLH-Le-JVk" kind="presentation" identifier="addContact" id="rFm-PZ-x29"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1395,9 +1395,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeH-AD-rla">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                                 <subviews>
-                                    <stackView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6WT-ru-wFN" userLabel="Vertical Stack View">
+                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6WT-ru-wFN" userLabel="Vertical Stack View">
                                         <rect key="frame" x="20" y="24" width="335" height="452.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="nkY-Ya-fmH">
@@ -1569,10 +1569,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="AeH-AD-rla" secondAttribute="trailing" id="50e-aM-HI6"/>
-                            <constraint firstItem="AeH-AD-rla" firstAttribute="leading" secondItem="Lym-5F-fRc" secondAttribute="leading" id="N1A-M3-0xb"/>
-                            <constraint firstAttribute="bottom" secondItem="AeH-AD-rla" secondAttribute="bottom" id="Oga-Jg-x9t"/>
-                            <constraint firstItem="AeH-AD-rla" firstAttribute="top" secondItem="Lym-5F-fRc" secondAttribute="top" id="zKf-lN-FAL"/>
+                            <constraint firstItem="Frj-0S-6L2" firstAttribute="trailing" secondItem="AeH-AD-rla" secondAttribute="trailing" id="50e-aM-HI6"/>
+                            <constraint firstItem="AeH-AD-rla" firstAttribute="leading" secondItem="Frj-0S-6L2" secondAttribute="leading" id="N1A-M3-0xb"/>
+                            <constraint firstItem="Frj-0S-6L2" firstAttribute="bottom" secondItem="AeH-AD-rla" secondAttribute="bottom" id="Oga-Jg-x9t"/>
+                            <constraint firstItem="AeH-AD-rla" firstAttribute="top" secondItem="Frj-0S-6L2" secondAttribute="top" constant="20" id="zKf-lN-FAL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Frj-0S-6L2"/>
                     </view>
