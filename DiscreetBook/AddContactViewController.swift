@@ -47,8 +47,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     func saveContact() {
         
-        
-        //Code to save new contact
+        // Save new contact
         if let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) {
             let newContact = Contact(entity: entity, insertInto: coreDataStack.managedObjectContext)
             
@@ -58,7 +57,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             if let lastName = self.lastName {
                 newContact.lastName = lastName.text
                 if var lastInitial = lastName.text {
-//                    lastInitial = lastInitial.substring(to: lastInitial.characters.index(lastInitial.startIndex, offsetBy: 1))
                     let indexStart = lastInitial.index(lastInitial.startIndex, offsetBy: 1)
                     lastInitial = String(lastInitial[indexStart])
                     newContact.lastInitial = lastInitial
@@ -68,7 +66,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 
             }else {
                 if var firstInitial = firstName.text {
-//                    firstInitial = firstInitial.substring(to: firstInitial.characters.index(firstInitial.startIndex, offsetBy: 1))
                     let indexStart = firstInitial.index(firstInitial.startIndex, offsetBy: 1)
                     firstInitial = String(firstInitial[indexStart])
                     newContact.lastInitial = firstInitial
@@ -76,7 +73,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                     print(firstInitial)
                 }
             }
-            
             
             if let workPhone = self.workPhone {
                 newContact.workPhone = workPhone.text
@@ -106,7 +102,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 newContact.zip = zip.text
             }
         }
-        
         coreDataStack.saveMainContext()
     }
     
@@ -162,7 +157,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         contactScrollView.backgroundColor = UIColor.gray
         
@@ -212,33 +206,16 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         else if (self.lastContentOffset < scrollView.contentOffset.y) {
             // move down
         }
-        
         // update the new position acquired
         self.lastContentOffset = scrollView.contentOffset.y
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {return}
-        print(duration) // you got animation's duration safely unwraped as a double
         adjustInsetForKeyboardShow(true, notification: notification)
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            print("notification: Keyboard will show")
-//            if self.view.frame.origin.y == 0{
-//                self.view.frame.origin.y -= keyboardSize.height
-//            }
-//        }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-//        UIView.animate(withDuration: <#T##TimeInterval#>, animations: <#T##() -> Void#>)
-        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {return}
-        print(duration) // you got animation's duration safely unwraped as a double
         adjustInsetForKeyboardShow(false, notification: notification)
-//        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            if self.view.frame.origin.y != 0 {
-//                self.view.frame.origin.y += keyboardSize.height
-//            }
-//        }
     }
     
     func adjustInsetForKeyboardShow(_ show: Bool, notification: Notification) {
@@ -267,28 +244,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
-        
-        /*
-        firstName.resignFirstResponder()
-        lastName.resignFirstResponder()
-        workPhone.resignFirstResponder()
-        homePhone.resignFirstResponder()
-        mobilePhone.resignFirstResponder()
-        workEmail.resignFirstResponder()
-        homeEmail.resignFirstResponder()
-        address.resignFirstResponder()
-        city.resignFirstResponder()
-        state.resignFirstResponder()
-        zip.resignFirstResponder()
-        */
-        
         return true
-        
     }
-
-
 }
-
-
