@@ -35,6 +35,10 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
 
     
     @IBAction func saveButton(_ sender: Any) {
+        guard !(firstName.text?.isEmpty)! && !(lastName.text?.isEmpty)! else {
+            showAlert(title: "Error", message: "Saving a contact requires a first name and a last initial.")
+            return
+        }
         saveContact()
         
         dismiss(animated: true, completion: nil)
@@ -42,11 +46,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     
     
     func saveContact() {
-        //TODO: add error alert for user to enter info if fields are blank so we don't try to save nil info
-        guard !(firstName.text?.isEmpty)! || !(lastName.text?.isEmpty)! else {
-            // TODO: add error alert here for user
-            return
-        }
+        
         
         //Code to save new contact
         if let entity = NSEntityDescription.entity(forEntityName: "Contact", in: coreDataStack.managedObjectContext) {
