@@ -12,9 +12,10 @@ import CoreData
 class EditContactViewController: UIViewController, UITextFieldDelegate {
     
     var coreDataStack: CoreDataStack!
-    
+
     @IBOutlet var editScrollView: UIScrollView!
     
+
     @IBOutlet var firstName: UITextField!
     @IBOutlet var lastName: UITextField!
     @IBOutlet var workPhone: UITextField!
@@ -27,6 +28,7 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var state: UITextField!
     @IBOutlet var zip: UITextField!
     
+   
     @IBAction func cancelEditButton(_ sender: AnyObject) {
         
         dismiss(animated: true, completion: nil)
@@ -189,25 +191,8 @@ class EditContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
-        
-        /*
-        firstName.resignFirstResponder()
-        lastName.resignFirstResponder()
-        workPhone.resignFirstResponder()
-        homePhone.resignFirstResponder()
-        mobilePhone.resignFirstResponder()
-        workEmail.resignFirstResponder()
-        homeEmail.resignFirstResponder()
-        address.resignFirstResponder()
-        city.resignFirstResponder()
-        state.resignFirstResponder()
-        zip.resignFirstResponder()
-        */
-        
         return true
-        
     }
 
 

@@ -66,7 +66,7 @@
 		9C096F9A1BFF965D00411D88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C096F9D1BFF965D00411D88 /* discreetBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = discreetBook.xcdatamodel; sourceTree = "<group>"; };
 		9C096F9F1BFF965D00411D88 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		9C096FA11BFF965D00411D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		9C096FA11BFF965D00411D88 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = /Users/jenalgrafton/Documents/MyiOSApps/DiscreetBookFinal/discreetBook/DiscreetBook/DetailViewController.swift; sourceTree = "<absolute>"; };
 		9C096FA41BFF965D00411D88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9C096FA61BFF965D00411D88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C096FA91BFF965D00411D88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 		9C6449D21C7E56EB00BDFA17 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		9C6449D41C7E680200BDFA17 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9C766EB21C32110600882147 /* discreetBookIcon2-167X167@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discreetBookIcon2-167X167@2X.png"; sourceTree = "<group>"; };
-		9C88057D1C19261B00BB0317 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
+		9C88057D1C19261B00BB0317 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactViewController.swift; path = /Users/jenalgrafton/Documents/MyiOSApps/DiscreetBookFinal/discreetBook/DiscreetBook/EditContactViewController.swift; sourceTree = "<absolute>"; };
 		9C8805871C1B6D0700BB0317 /* discreetBookIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discreetBookIcon2.png; path = ../discreetBookIcon2.png; sourceTree = "<group>"; };
 		9C8805891C1B711A00BB0317 /* discreetBookIcon2-58X58@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-58X58@2X.png"; path = "../discreetBookIcon2-58X58@2X.png"; sourceTree = "<group>"; };
 		9C88058B1C1B716200BB0317 /* discreetBookIcon2-80X80@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discreetBookIcon2-80X80@2X.png"; path = "../discreetBookIcon2-80X80@2X.png"; sourceTree = "<group>"; };

@@ -20,10 +20,9 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
     
     @IBOutlet var detailScrollView: UIScrollView!
     
-    
     @IBOutlet var firstNameLabel: UILabel!
     @IBOutlet var lastNameLabel: UILabel!
-
+    
     @IBOutlet var workPhoneOutlet: UIButton!
     @IBAction func workPhoneButton(_ sender: AnyObject) {
         let sender = sender
@@ -32,7 +31,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             showShareOptions(sender)
         }
     }
-    
+
     @IBOutlet var homePhoneOutlet: UIButton!
     @IBAction func homePhoneButton(_ sender: AnyObject) {
         let sender = sender
@@ -61,7 +60,7 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
             self.showSendMailErrorAlert()
         }
     }
-    
+
     @IBOutlet var homeEmailOutlet: UIButton!
     @IBAction func homeEmailButton(_ sender: AnyObject) {
         let sender = sender
@@ -73,7 +72,6 @@ class DetailViewController: UIViewController, MFMessageComposeViewControllerDele
         }
     }
     
-
     @IBOutlet var addressLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var stateLabel: UILabel!
